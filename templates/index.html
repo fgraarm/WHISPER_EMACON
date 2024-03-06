@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Whisper Transcriber</title>
+</head>
+<body>
+    <h2>Transcribe Audio with Whisper</h2>
+    <form id="audioForm">
+        <input type="file" id="audioInput" name="file" accept="audio/*">
+        <select name="model">
+            <option value="base">Base</option>
+            <option value="small">Small</option>
+            <!-- Agrega más modelos según necesites -->
+        </select>
+        <input type="checkbox" id="translate" name="translate">
+        <label for="translate">Translate</label>
+        <button type="submit">Transcribe</button>
+    </form>
+    <div id="statusMessage"></div> <!-- Mensaje de estado añadido -->
+    <div id="transcriptionResult"></div>
+
+    <script>
+        document.getElementById('audioForm').onsubmit = async (e) => {
+            e.preventDefault();
+            document.getElementById('statusMessage').textContent = 'Procesando...'; // Mostrar mensaje de procesando
+            const formData = new FormData(e.target);
+            try {
+                const response = await fetch('/transcribe', {
+                    method: 'POST',
+                    body: formData,
+                });
+                if (response.ok) {
+                    const result = await response.json();
+                    document.getElementById('statusMessage').textContent = 'Procesado'; // Cambiar el mensaje a procesado
+                    document.getElementById('transcriptionResult').textContent = result.text;
+                } else {
+                    document.getElementById('statusMessage').textContent = 'Error en la transcripción';
+                }
+            } catch (error) {
+                document.getElementById('statusMessage').textContent = 'Error en la transcripción';
+                console.error('Error:', error);
+            }
+        };
+    </script>
+</body>
+</html>
+
