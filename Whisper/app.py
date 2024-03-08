@@ -76,3 +76,4 @@ def transcribe_realtime():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
