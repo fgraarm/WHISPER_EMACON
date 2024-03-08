@@ -13,7 +13,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Asegúrate de que el directorio existe
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-modelo_whisper = whisper.load_model("base")  # Cargar el modelo de forma global puede ser más eficiente
+# Cargar el modelo de Whisper de forma global para eficiencia
+modelo_whisper = whisper.load_model("base")
 
 @app.route('/')
 def index():
@@ -54,6 +55,24 @@ def transcribe_audio():
     os.remove(file_path)
 
     return jsonify({"text": full_transcription.strip()})
+
+@app.route('/transcribe_realtime', methods=['POST'])
+def transcribe_realtime():
+    file = request.files['file']
+    if file:
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+        file.save(file_path)
+        
+        segment_audio = whisper.load_audio(file_path)
+        segment_audio = whisper.pad_or_trim(segment_audio)
+        result = modelo_whisper.transcribe(segment_audio)
+        
+        os.remove(file_path)  # Eliminar el archivo de segmento después de transcribirlo
+        
+        return jsonify({"text": result["text"]})
+    else:
+        return "No file received", 400
 
 if __name__ == '__main__':
     app.run(debug=True)
