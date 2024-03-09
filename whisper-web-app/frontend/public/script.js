@@ -83,4 +83,15 @@ document.getElementById('stop-button').addEventListener('click', function() {
     showProcessingState('Deteniendo grabación...');
 });
 
+// Agrega un listener para el nuevo botón de detener procesamiento
+document.getElementById('stop-processing-button').addEventListener('click', function() {
+    // Detiene la grabación si está en curso
+    if (mediaRecorder && mediaRecorder.state === 'recording') {
+        mediaRecorder.stop();
+    }
+    
+    // Detiene el procesamiento de la transcripción si está en curso
+    showProcessingState('Procesamiento detenido.');
+});
+
 
