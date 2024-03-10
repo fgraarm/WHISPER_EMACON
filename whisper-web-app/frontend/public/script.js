@@ -1,8 +1,28 @@
 let mediaRecorder;
-let audioChunks = [];
+let isRecording = false;
 
 function showProcessingState(message) {
     document.getElementById('status').innerText = message;
+}
+
+function processAudioSegment(audioBlob) {
+    const formData = new FormData();
+    formData.append('file', audioBlob);
+    formData.append('model', document.getElementById('model-select').value);
+    formData.append('language', document.getElementById('language-input').value);
+
+    fetch('/realtimerecording', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('transcription').innerText += data.transcription + " ";
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showProcessingState('Error al procesar la grabación en tiempo real.');
+    });
 }
 
 document.getElementById('upload-button').addEventListener('click', function() {
@@ -18,7 +38,7 @@ document.getElementById('upload-button').addEventListener('click', function() {
     formData.append('language', document.getElementById('language-input').value);
     
     showProcessingState('Cargando y procesando audio...');
-
+    
     fetch('/upload', {
         method: 'POST',
         body: formData,
@@ -35,40 +55,23 @@ document.getElementById('upload-button').addEventListener('click', function() {
 });
 
 document.getElementById('record-button').addEventListener('click', function() {
+    if (isRecording) {
+        return; // Prevent starting a new recording if already recording
+    }
     navigator.mediaDevices.getUserMedia({ audio: true })
         .then(stream => {
             mediaRecorder = new MediaRecorder(stream);
-            audioChunks = [];
+            isRecording = true;
             showProcessingState('Grabando...');
             
             mediaRecorder.addEventListener('dataavailable', event => {
-                audioChunks.push(event.data);
+                if (event.data.size > 0 && isRecording) {
+                    processAudioSegment(event.data);
+                }
             });
+
+            mediaRecorder.start(15000); // Start recording, and generate audio chunks every 15 seconds
             
-            mediaRecorder.addEventListener('stop', () => {
-                showProcessingState('Procesando grabación...');
-                const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                const formData = new FormData();
-                formData.append('file', audioBlob, 'recording.wav');
-                formData.append('model', document.getElementById('model-select').value);
-                formData.append('language', document.getElementById('language-input').value);
-                
-                fetch('/upload', {
-                    method: 'POST',
-                    body: formData,
-                })
-                .then(response => response.json())
-                .then(data => {
-                    showProcessingState('Transcripción de la grabación completada.');
-                    document.getElementById('transcription').innerText = data.transcription;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    showProcessingState('Error al procesar la grabación.');
-                });
-            });
-            
-            mediaRecorder.start();
             document.getElementById('stop-button').disabled = false;
         })
         .catch(error => {
@@ -78,20 +81,10 @@ document.getElementById('record-button').addEventListener('click', function() {
 });
 
 document.getElementById('stop-button').addEventListener('click', function() {
-    mediaRecorder.stop();
-    document.getElementById('stop-button').disabled = true;
-    showProcessingState('Deteniendo grabación...');
-});
-
-// Agrega un listener para el nuevo botón de detener procesamiento
-document.getElementById('stop-processing-button').addEventListener('click', function() {
-    // Detiene la grabación si está en curso
-    if (mediaRecorder && mediaRecorder.state === 'recording') {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
         mediaRecorder.stop();
+        isRecording = false;
+        document.getElementById('stop-button').disabled = true;
+        showProcessingState('Deteniendo grabación...');
     }
-    
-    // Detiene el procesamiento de la transcripción si está en curso
-    showProcessingState('Procesamiento detenido.');
 });
-
-
