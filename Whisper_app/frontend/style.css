@@ -1,0 +1,65 @@
+body, html {
+    font-family: Arial, sans-serif;
+    padding: 0;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.form-style {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.select-style,
+.input-style {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    box-sizing: border-box; /* Makes sure padding does not affect overall width */
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.transcription-box {
+    margin-top: 20px;
+    background-color: #eee;
+    padding: 10px;
+    border-radius: 4px;
+    min-height: 50px; /* Gives the box a minimum height */
+}
+
+.loading {
+    display: none;
+    width: 50px;
+    height: auto;
+    margin: 10px auto;
+}
+
+/* ... other styles ... */

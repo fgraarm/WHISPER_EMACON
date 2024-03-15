@@ -1,0 +1,5 @@
+Flask==2.0.1
+whisper==0.1.0
+sounddevice==0.4.1
+soundfile==0.10.3.post1
+numpy==1.21.2
