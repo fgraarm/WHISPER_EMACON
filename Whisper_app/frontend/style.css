@@ -76,4 +76,17 @@ body, html {
     height: auto;
     margin: 10px auto;
 }
+.EMAD {
+    width: 300px; /* o el tamaño que prefieras */
+    height: auto; /* mantiene las proporciones de la imagen */
+    display: block; /* Esto asegura que la imagen se trate como un bloque y pueda centrarse */
+    margin: 30px auto; /* Esto centra la imagen horizontalmente y añade margen arriba y abajo */
+}
+
+/* Contenedor para la imagen EMAD */
+.emad-container {
+    text-align: center; /* Esto centra la imagen si display es inline o inline-block */
+    margin-top: 20px; /* Espacio adicional arriba si es necesario */
+    margin-bottom: 20px; /* Espacio adicional abajo si es necesario */
+}
 /* ... other styles ... */
