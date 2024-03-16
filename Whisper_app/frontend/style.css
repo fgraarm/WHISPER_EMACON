@@ -61,5 +61,10 @@ body, html {
     height: auto;
     margin: 10px auto;
 }
-
+.recording {
+    display: none;
+    width: 200px;
+    height: auto;
+    margin: 10px auto;
+}
 /* ... other styles ... */

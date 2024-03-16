@@ -34,7 +34,9 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
 let recordingInterval;
 
 document.getElementById('record-btn').addEventListener('click', function() {
-    setLoading(true); // Mostrar GIF de carga
+        document.getElementById('recording-gif').style.display = 'block'; // Mostrar el GIF de grabación
+
+    
     toggleRecordingButtons(true); // Ocultar el botón de grabar y mostrar el de detener
     fetch('/record', { method: 'POST' })
     .then(() => {
@@ -42,14 +44,14 @@ document.getElementById('record-btn').addEventListener('click', function() {
         recordingInterval = setInterval(fetchTranscription, 20000); // Cada 20 segundos
     })
     .catch(error => {
-        setLoading(false); // Ocultar GIF de carga en caso de error
+       
         toggleRecordingButtons(false);
         console.error('Error:', error);
     });
 });
 
 document.getElementById('stop-btn').addEventListener('click', function() {
-    setLoading(false); // Ocultar GIF de carga
+        document.getElementById('recording-gif').style.display = 'none'; // Ocultar el GIF de grabación
     toggleRecordingButtons(false); // Mostrar el botón de grabar y ocultar el de detener
     clearInterval(recordingInterval); // Detener el intervalo de solicitud de transcripciones
     fetch('/stop_record', { method: 'POST' })  // Asegúrate de que este es el endpoint correcto
