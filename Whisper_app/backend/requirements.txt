@@ -1,5 +1,54 @@
-Flask==2.0.1
-whisper==0.1.0
-sounddevice==0.4.1
-soundfile==0.10.3.post1
-numpy==1.21.2
+bidict==0.23.1
+blinker @ file:///C:/b/abs_d9y2dm7cw2/croot/blinker_1696539752170/work
+certifi==2024.2.2
+cffi==1.16.0
+charset-normalizer==3.3.2
+click @ file:///C:/b/abs_f9ihnt72pu/croot/click_1698129847492/work
+colorama @ file:///C:/ci_311/colorama_1676422310965/work
+dnspython==2.6.1
+eventlet==0.35.2
+filelock==3.13.1
+Flask @ file:///home/conda/feedstock_root/build_artifacts/flask_1707043907952/work
+Flask-SocketIO==5.3.6
+fsspec==2024.3.0
+greenlet==3.0.3
+h11==0.14.0
+huggingface-hub==0.21.4
+idna==3.6
+importlib-metadata @ file:///C:/b/abs_c1egths604/croot/importlib_metadata-suite_1704813568388/work
+itsdangerous @ file:///home/conda/feedstock_root/build_artifacts/itsdangerous_1648147185463/work
+Jinja2 @ file:///C:/b/abs_f7x5a8op2h/croot/jinja2_1706733672594/work
+joblib==1.3.2
+llvmlite==0.42.0
+MarkupSafe @ file:///C:/b/abs_ecfdqh67b_/croot/markupsafe_1704206030535/work
+more-itertools==10.2.0
+mpmath==1.3.0
+networkx==3.2.1
+noisereduce==3.0.0
+numba==0.59.0
+numpy==1.26.4
+openai-whisper==20231117
+packaging==24.0
+pycparser==2.21
+python-engineio==4.9.0
+python-socketio==5.11.1
+PyYAML==6.0.1
+regex==2023.12.25
+requests==2.31.0
+sacremoses==0.1.1
+safetensors==0.4.2
+sentencepiece==0.2.0
+simple-websocket==1.0.0
+sounddevice==0.4.6
+soundfile==0.12.1
+sympy==1.12
+tiktoken==0.6.0
+tokenizers==0.15.2
+torch==2.2.1
+tqdm==4.66.2
+transformers==4.38.2
+typing_extensions==4.10.0
+urllib3==2.2.1
+Werkzeug @ file:///home/conda/feedstock_root/build_artifacts/werkzeug_1698235201373/work
+wsproto==1.2.0
+zipp @ file:///C:/b/abs_b0beoc27oa/croot/zipp_1704206963359/work

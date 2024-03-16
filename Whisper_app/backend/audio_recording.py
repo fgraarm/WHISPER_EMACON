@@ -6,6 +6,7 @@ import tempfile
 import threading
 import queue
 
+is_recording = False  # Nuevo interruptor para controlar la grabación
 # Cola para guardar las transcripciones acumuladas
 transcriptions_queue = queue.Queue()
 
@@ -35,30 +36,22 @@ def save_temp_audio(recording, fs=44100):
     return temp_file.name
 
 def recording_and_transcription_thread(model, language, transcriptions_queue):
-    """
-    Función que se ejecutará en un hilo separado para grabar y transcribir audio.
-    
-    :param model: Modelo de Whisper a utilizar para la transcripción.
-    :param language: Idioma del audio, si se conoce.
-    :param transcriptions_queue: Cola para poner las transcripciones.
-    """
-    while True:
+    global is_recording
+    while is_recording:  # Usa is_recording para controlar el bucle
         recording = record_audio()
         audio_file_path = save_temp_audio(recording)
         transcript = transcribe_audio(audio_file_path, model, language)
         transcriptions_queue.put(transcript)
 
 def start_recording(model, language=None):
-    """
-    Inicia el proceso de grabación de audio y transcripción en intervalos.
-
-    :param model: Modelo de Whisper a utilizar para la transcripción.
-    :param language: Idioma del audio, si se conoce.
-    """
-    # Iniciar la grabación y transcripción en un hilo separado
+    global is_recording
+    is_recording = True  # Activar la grabación
     thread = threading.Thread(target=recording_and_transcription_thread, args=(model, language, transcriptions_queue))
-    thread.daemon = True  # Esto asegura que el hilo se cierre cuando el programa principal finalice
+    thread.daemon = True
     thread.start()
+def stop_recording():
+    global is_recording
+    is_recording = False  # Desactivar la grabación
 
 def get_next_transcription():
     """

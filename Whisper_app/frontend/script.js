@@ -52,10 +52,12 @@ document.getElementById('stop-btn').addEventListener('click', function() {
     setLoading(false); // Ocultar GIF de carga
     toggleRecordingButtons(false); // Mostrar el botón de grabar y ocultar el de detener
     clearInterval(recordingInterval); // Detener el intervalo de solicitud de transcripciones
-    fetch('/stop_record', { method: 'POST' })
+    fetch('/stop_record', { method: 'POST' })  // Asegúrate de que este es el endpoint correcto
+    .then(response => {
+        console.log('Recording stopped successfully');
+    })
     .catch(error => console.error('Error al detener la grabación:', error));
 });
-
 document.getElementById('translate-btn').addEventListener('click', function() {
     const transcription = document.getElementById('transcription-result').textContent;
     const targetLang = document.getElementById('target-lang-select').value;

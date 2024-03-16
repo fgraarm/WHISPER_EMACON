@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, send_from_directory, render_template
 from werkzeug.utils import secure_filename
 from whisper_integration import transcribe_audio
-from audio_recording import start_recording, get_next_transcription
+from audio_recording import start_recording, get_next_transcription, stop_recording  # Asegúrate de importar stop_recording
 from transformers import pipeline
 import os
 
@@ -87,6 +87,11 @@ def get_transcription():
     """Endpoint para obtener la transcripción acumulada."""
     transcript = get_next_transcription()
     return jsonify({"transcript": transcript})
+# Añade el siguiente endpoint a app.py
+@app.route('/stop_record', methods=['POST'])
+def stop_record():
+    stop_recording()  # Llama a la función para detener la grabación
+    return jsonify({"message": "Recording stopped"})
 
 # Servir archivos estáticos para cualquier ruta no capturada por las rutas anteriores
 @app.route('/<path:path>')
