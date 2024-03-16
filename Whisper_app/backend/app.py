@@ -65,6 +65,7 @@ def transcribe():
     file = request.files['file']
     model = request.form.get('model', 'tiny')
     language = request.form.get('language', None)
+    includeTimestamps = 'includeTimestamps' in request.form and request.form['includeTimestamps'] == 'true'
     
     if file.filename == '':
         return jsonify({"error": "No selected file"}), 400
@@ -76,7 +77,7 @@ def transcribe():
         file.save(filename)
         
         # Llamada a la función de transcripción
-        transcript = transcribe_audio(filename, model, language)
+        transcript = transcribe_audio(filename, model, language, includeTimestamps)
         
         return jsonify({"transcript": transcript})
 

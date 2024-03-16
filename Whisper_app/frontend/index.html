@@ -30,7 +30,10 @@
                 <label for="audio-file">Subir archivo de audio:</label>
                 <input type="file" id="audio-file" name="audio-file" accept="audio/*">
             </div>
-            
+            <div class="form-group">
+        <input type="checkbox" id="include-timestamps" name="include-timestamps">
+        <label for="include-timestamps">Incluir Timestamps</label>
+           </div>
             <button type="submit" class="btn">Transcribir</button>
             <img id="loading" class="loading" src="loading.gif" style="display:none;"/>
         </form>

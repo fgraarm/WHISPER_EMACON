@@ -15,6 +15,7 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
     formData.append('file', document.getElementById('audio-file').files[0]);
     formData.append('model', document.getElementById('model-select').value);
     formData.append('language', document.getElementById('language-input').value);
+    formData.append('includeTimestamps', document.getElementById('include-timestamps').checked);
 
     fetch('/transcribe', {
         method: 'POST',
