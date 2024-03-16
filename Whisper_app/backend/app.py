@@ -6,7 +6,11 @@ from transformers import pipeline
 import os
 
 # Inicializa la pipeline de traducción
-translator = pipeline("translation", model="Helsinki-NLP/opus-mt-en-es")
+translators = {
+    'en-es': pipeline("translation", model="Helsinki-NLP/opus-mt-en-es"),
+    'ru-es': pipeline("translation", model="Helsinki-NLP/opus-mt-ru-es"),
+    'fr-es': pipeline("translation", model="Helsinki-NLP/opus-mt-fr-es"),
+}
 
 # Definir la ruta al directorio frontend
 frontend_dir = os.path.abspath("../frontend")
@@ -19,7 +23,10 @@ def translate_text():
     source_text = data['text']
     source_lang = data.get('source_lang', 'en')  # Idioma de origen, por defecto 'en'
     target_lang = data.get('target_lang', 'es')  # Idioma de destino, por defecto 'es'
-    
+    translator_key = f'{source_lang}-{target_lang}'
+    translator = translators.get(translator_key, None)
+    if not translator:
+        return jsonify({"error": "No se encontró un modelo de traducción para el par de idiomas especificado."}), 400
     # Divide el texto en segmentos más pequeños
     segment_size = 400  # Ajusta este valor según sea necesario
     segments = [source_text[i:i+segment_size] for i in range(0, len(source_text), segment_size)]

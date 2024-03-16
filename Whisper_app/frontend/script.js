@@ -62,6 +62,7 @@ document.getElementById('stop-btn').addEventListener('click', function() {
 });
 document.getElementById('translate-btn').addEventListener('click', function() {
     const transcription = document.getElementById('transcription-result').textContent;
+    const sourceLang = document.getElementById('source-lang-select').value; // Asumiendo que tienes este selector
     const targetLang = document.getElementById('target-lang-select').value;
     
     fetch('/translate', {
@@ -71,7 +72,8 @@ document.getElementById('translate-btn').addEventListener('click', function() {
         },
         body: JSON.stringify({
             text: transcription,
-            target_lang: targetLang
+            source_lang: sourceLang, // Envía el idioma de origen
+            target_lang: targetLang,
         }),
     })
     .then(response => response.json())
