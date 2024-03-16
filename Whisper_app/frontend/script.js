@@ -33,18 +33,40 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
 
 let recordingInterval;
 
-document.getElementById('record-btn').addEventListener('click', function() {
+        document.getElementById('record-btn').addEventListener('click', function() {
         document.getElementById('recording-gif').style.display = 'block'; // Mostrar el GIF de grabación
 
     
     toggleRecordingButtons(true); // Ocultar el botón de grabar y mostrar el de detener
-    fetch('/record', { method: 'POST' })
+     // Capturar el modelo y el lenguaje seleccionados
+    const model = document.getElementById('model-select').value;
+    const language = document.getElementById('language-input').value; // Correcto según tu HTML
+
+
+    // Preparar el cuerpo de la solicitud
+    const requestBody = {
+        model: model,
+        language: language
+    };
+     fetch('/record', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json', // Asegurándose de que el servidor sabe que estás enviando JSON
+        },
+        body: JSON.stringify(requestBody) // Convertir los datos del formulario a JSON
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(() => {
         setLoading(false); // Ocultar GIF de carga
         recordingInterval = setInterval(fetchTranscription, 20000); // Cada 20 segundos
     })
     .catch(error => {
-       
+       document.getElementById('recording-gif').style.display = 'none'; // Asegúrate de ocultar el GIF si hay un error
         toggleRecordingButtons(false);
         console.error('Error:', error);
     });

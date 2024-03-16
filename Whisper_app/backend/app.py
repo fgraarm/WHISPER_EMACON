@@ -83,10 +83,10 @@ def transcribe():
 @app.route('/record', methods=['POST'])
 def record():
     """Endpoint para grabar y transcribir audio en tiempo real."""
-    model = request.form.get('model', 'tiny')
-    language = request.form.get('language', None)
+    data = request.get_json()  # Obtiene los datos enviados como JSON
+    model = data.get('model', 'tiny')
+    language = data.get('language', None)
     
-    # Iniciar la grabación y obtener la transcripción
     transcript = start_recording(model, language)
     
     return jsonify({"transcript": transcript})
