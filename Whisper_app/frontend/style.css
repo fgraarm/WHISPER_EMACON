@@ -49,12 +49,21 @@ body, html {
 
 .transcription-box {
     margin-top: 20px;
+    font-weight: bold;
     background-color: #eee;
     padding: 10px;
     border-radius: 4px;
     min-height: 50px; /* Gives the box a minimum height */
 }
-
+.transcription-box2 {
+    margin-top: 20px;
+    background-color: #eee;
+    color: blue;
+    font-weight: normal;
+    padding: 10px;
+    border-radius: 4px;
+    min-height: 50px; /* Gives the box a minimum height */
+}
 .loading {
     display: none;
     width: 50px;
