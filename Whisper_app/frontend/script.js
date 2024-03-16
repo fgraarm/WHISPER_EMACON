@@ -86,7 +86,8 @@ document.getElementById('translate-btn').addEventListener('click', function() {
     const transcription = document.getElementById('transcription-result').textContent;
     const sourceLang = document.getElementById('source-lang-select').value; // Asumiendo que tienes este selector
     const targetLang = document.getElementById('target-lang-select').value;
-    
+    document.getElementById('translating-gif').style.display = 'block';
+
     fetch('/translate', {
         method: 'POST',
         headers: {
@@ -100,10 +101,16 @@ document.getElementById('translate-btn').addEventListener('click', function() {
     })
     .then(response => response.json())
     .then(data => {
+    // Ocultar el GIF de traducción
+        document.getElementById('translating-gif').style.display = 'none';
         // Asegúrate de acceder a la propiedad correcta de la respuesta JSON para obtener el texto traducido
         document.getElementById('translation-result').textContent = data.translation; // Ajustado para usar data.translation
     })
-    .catch(error => console.error('Error:', error));
+  .catch(error => {
+        // Ocultar el GIF de traducción en caso de error
+        document.getElementById('translating-gif').style.display = 'none';
+        console.error('Error:', error);
+});
 });
 
 function fetchTranscription() {
