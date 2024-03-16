@@ -33,6 +33,14 @@
         </form>
         <button id="record-btn" class="btn">Iniciar Grabación</button>
         <button id="stop-btn" class="btn" style="display:none;">Detener Grabación</button>
+        <button id="translate-btn" class="btn">Traducir</button>
+<select id="target-lang-select" class="select-style">
+    <option value="es">Español</option>
+    <option value="en">Inglés</option>
+    <option value="fr">Francés</option>
+    <!-- Añade más opciones según los idiomas que desees soportar -->
+</select>
+<div id="translation-result" class="transcription-box"></div>
         <div id="transcription-result" class="transcription-box"></div>
     </div>
     <script src="script.js"></script>

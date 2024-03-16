@@ -52,9 +52,30 @@ document.getElementById('stop-btn').addEventListener('click', function() {
     setLoading(false); // Ocultar GIF de carga
     toggleRecordingButtons(false); // Mostrar el botón de grabar y ocultar el de detener
     clearInterval(recordingInterval); // Detener el intervalo de solicitud de transcripciones
-    // Aquí se debe implementar la lógica para detener la grabación en el backend
     fetch('/stop_record', { method: 'POST' })
     .catch(error => console.error('Error al detener la grabación:', error));
+});
+
+document.getElementById('translate-btn').addEventListener('click', function() {
+    const transcription = document.getElementById('transcription-result').textContent;
+    const targetLang = document.getElementById('target-lang-select').value;
+    
+    fetch('/translate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            text: transcription,
+            target_lang: targetLang
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Asegúrate de acceder a la propiedad correcta de la respuesta JSON para obtener el texto traducido
+        document.getElementById('translation-result').textContent = data.translation; // Ajustado para usar data.translation
+    })
+    .catch(error => console.error('Error:', error));
 });
 
 function fetchTranscription() {

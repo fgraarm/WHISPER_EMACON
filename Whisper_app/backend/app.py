@@ -2,12 +2,40 @@ from flask import Flask, request, jsonify, send_from_directory, render_template
 from werkzeug.utils import secure_filename
 from whisper_integration import transcribe_audio
 from audio_recording import start_recording, get_next_transcription
+from transformers import pipeline
 import os
+
+# Inicializa la pipeline de traducción
+translator = pipeline("translation", model="Helsinki-NLP/opus-mt-en-es")
 
 # Definir la ruta al directorio frontend
 frontend_dir = os.path.abspath("../frontend")
 
 app = Flask(__name__, static_folder=frontend_dir, template_folder=frontend_dir)
+
+@app.route('/translate', methods=['POST'])
+def translate_text():
+    data = request.json
+    source_text = data['text']
+    source_lang = data.get('source_lang', 'en')  # Idioma de origen, por defecto 'en'
+    target_lang = data.get('target_lang', 'es')  # Idioma de destino, por defecto 'es'
+    
+    # Divide el texto en segmentos más pequeños
+    segment_size = 400  # Ajusta este valor según sea necesario
+    segments = [source_text[i:i+segment_size] for i in range(0, len(source_text), segment_size)]
+    
+    translated_segments = []
+    for segment in segments:
+        try:
+            # Traduce cada segmento
+            translation = translator(segment, src_lang=source_lang, tgt_lang=target_lang, truncation=True)[0]['translation_text']
+            translated_segments.append(translation)
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+    
+    # Combina todas las traducciones de segmentos en una respuesta
+    full_translation = " ".join(translated_segments)
+    return jsonify({"translation": full_translation})
 
 @app.route('/')
 def index():
@@ -30,7 +58,7 @@ def transcribe():
     if file and allowed_file(file.filename):
         uploads_dir = os.path.join(os.getcwd(), 'uploads')
         os.makedirs(uploads_dir, exist_ok=True)
-        filename = os.path.join('uploads', secure_filename(file.filename))
+        filename = os.path.join(uploads_dir, secure_filename(file.filename))
         file.save(filename)
         
         # Llamada a la función de transcripción
@@ -52,8 +80,7 @@ def record():
 def allowed_file(filename):
     """Verifica si el archivo tiene una extensión permitida."""
     ALLOWED_EXTENSIONS = {'wav', 'mp3', 'flac'}
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
            
 @app.route('/get_transcription', methods=['GET'])
 def get_transcription():
