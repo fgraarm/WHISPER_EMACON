@@ -9,26 +9,28 @@
 <body>
     <div class="container">
         <h1>Transcripción de Audio con Whisper</h1>
+         <h2 class="section-title">CONFIGURACION</h2>
+        <div class="form-group">
+            <label for="model-select">Seleccionar modelo:</label>
+            <select id="model-select" name="model" class="select-style">
+                <option value="tiny">Tiny</option>
+                <option value="base">Base</option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="language-input">Idioma (opcional):</label>
+            <input type="text" id="language-input" name="language" class="input-style" placeholder="ej. es, en, ru, fr">
+        </div>
         <h2 class="section-title">IMPORTACIÓN DE ARCHIVOS DE AUDIO</h2>
         <form id="upload-form" class="form-style">
             <div class="form-group">
                 <label for="audio-file">Subir archivo de audio:</label>
                 <input type="file" id="audio-file" name="audio-file" accept="audio/*">
             </div>
-            <div class="form-group">
-                <label for="model-select">Seleccionar modelo:</label>
-                <select id="model-select" name="model" class="select-style">
-                    <option value="tiny">Tiny</option>
-                    <option value="base">Base</option>
-                    <option value="small">Small</option>
-                    <option value="medium">Medium</option>
-                    <option value="large">Large</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="language-input">Idioma (opcional):</label>
-                <input type="text" id="language-input" name="language" class="input-style" placeholder="ej. es, en, ru, fr">
-            </div>
+            
             <button type="submit" class="btn">Transcribir</button>
             <img id="loading" class="loading" src="loading.gif" style="display:none;"/>
         </form>
@@ -40,13 +42,19 @@
         <button id="translate-btn" class="btn">Traducir</button>
                 <!-- Selector de idioma de origen -->
   <select id="source-lang-select" class="select-style">
+            <option value="es">Español</option>
             <option value="en">Inglés</option>
             <option value="ru">Ruso</option>
             <option value="fr">Francés</option>
+            
         </select>
         <!-- Selector de idioma de destino -->
         <select id="target-lang-select" class="select-style">
             <option value="es">Español</option>
+            <option value="en">Inglés</option>
+            <option value="ru">Ruso</option>
+            <option value="fr">Francés</option>
+            
         </select>
 
     <!-- Añade más opciones según los idiomas que desees soportar -->
