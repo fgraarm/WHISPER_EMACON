@@ -78,8 +78,11 @@ def transcribe():
         
         # Llamada a la función de transcripción
         transcript = transcribe_audio(filename, model, language, includeTimestamps)
+        # Eliminar el archivo de audio importado una vez transcribido
+        os.remove(filename)  # Añadido para eliminar el archivo después de la transcripción
         
         return jsonify({"transcript": transcript})
+ 
 
 @app.route('/record', methods=['POST'])
 def record():
