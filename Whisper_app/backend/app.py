@@ -54,7 +54,7 @@ def translate_text():
 @app.route('/')
 def index():
     """Ruta para servir la página de inicio."""
-    return render_template('index.html')
+    return render_template('/static/index.html')
 
 @app.route('/transcribe', methods=['POST'])
 def transcribe():
