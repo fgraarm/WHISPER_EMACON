@@ -88,9 +88,9 @@ def record():
     model = data.get('model', 'tiny')
     language = data.get('language', None)
     
-    transcript = start_recording(model, language)
-    
-    return jsonify({"transcript": transcript})
+    start_recording(model, language)
+    return jsonify({"message": "Recording started"}), 200
+
 
 def allowed_file(filename):
     """Verifica si el archivo tiene una extensión permitida."""
@@ -101,12 +101,15 @@ def allowed_file(filename):
 def get_transcription():
     """Endpoint para obtener la transcripción acumulada."""
     transcript = get_next_transcription()
-    return jsonify({"transcript": transcript})
-# Añade el siguiente endpoint a app.py
+    if transcript:
+       return jsonify({"transcript": transcript})
+    else:
+       return jsonify({"message": "No new transcription available"}), 204
+
 @app.route('/stop_record', methods=['POST'])
 def stop_record():
-    stop_recording()  # Llama a la función para detener la grabación
-    return jsonify({"message": "Recording stopped"})
+    stop_recording()
+    return jsonify({"message": "Recording stopped"}), 200
 
 # Servir archivos estáticos para cualquier ruta no capturada por las rutas anteriores
 @app.route('/<path:path>')
