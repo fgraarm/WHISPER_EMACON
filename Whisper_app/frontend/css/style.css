@@ -1,28 +1,36 @@
-body, html {
-    font-family: Arial, sans-serif;
-    padding: 0;
-    margin: 0;
-    background-color: #f0f0f0;
+/* Asegura que el contenido de body se pueda centrar */
+.background-cover {
+  background-image: url('../images/EMAD_INICIO.jpg'); /* Ajusta la ruta a la imagen */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
-.container {
-    width: 80%;
-    margin: auto;
-    margin-top: 20px;
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    border-radius: 8px;
+/* Estilos personalizados para el crest */
+.crest {
+  width: 200px;
+  height: 250px;
+  background-image: url('../images/INICIO_whisper.jpg'); /* Ajusta la ruta según sea necesario */
+  background-size: cover;
+  background-position: center;
 }
 
-.form-style {
-    margin-bottom: 20px;
+/* Centrado y estilizado de la navegación */
+nav {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0,0,0,0.7);
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
-.form-group {
-    margin-bottom: 10px;
-}
-
 .select-style,
 .input-style {
     width: 100%;
@@ -33,66 +41,51 @@ body, html {
     box-sizing: border-box; /* Makes sure padding does not affect overall width */
 }
 
-.btn {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 5px;
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.btn:hover {
-    background-color: #0056b3;
+nav ul li a {
+  font-size: 24px;
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
 }
 
-.transcription-box {
-    margin-top: 20px;
-    font-weight: bold;
-    background-color: #eee;
-    padding: 10px;
-    border-radius: 4px;
-    min-height: 50px; /* Gives the box a minimum height */
+nav ul li a:hover {
+  color: #ccc;
 }
-.transcription-box2 {
-    margin-top: 20px;
-    background-color: #eee;
-    color: blue;
-    font-weight: normal;
-    padding: 10px;
-    border-radius: 4px;
-    min-height: 50px; /* Gives the box a minimum height */
-}
-.loading {
-    display: none;
-    width: 50px;
-    height: auto;
-    margin: 10px auto;
-}
-.recording {
-    display: none;
-    width: 200px;
-    height: auto;
-    margin: 10px auto;
-}
-.translating {
-    display: none;
-    width: 100px;
-    height: auto;
-    margin: 10px auto;
-}
-.EMAD {
-    width: 300px; /* o el tamaño que prefieras */
-    height: auto; /* mantiene las proporciones de la imagen */
-    display: block; /* Esto asegura que la imagen se trate como un bloque y pueda centrarse */
-    margin: 30px auto; /* Esto centra la imagen horizontalmente y añade margen arriba y abajo */
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Contenedor para la imagen EMAD */
-.emad-container {
-    text-align: center; /* Esto centra la imagen si display es inline o inline-block */
-    margin-top: 20px; /* Espacio adicional arriba si es necesario */
-    margin-bottom: 20px; /* Espacio adicional abajo si es necesario */
+.min-h-screen {
+  min-height: 100vh;
 }
-/* ... other styles ... */
+
+.background-flag {
+  /* Ajusta estas dimensiones al tamaño real de tu imagen */
+  width: 960px; /* Ancho de la imagen */
+  height: 540px; /* Alto de la imagen */
+  background-image: url('../images/bandera.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.text {
+  /* Estilos existentes */
+  font-weight: bold; /* Hace el texto en negrita */
+  font-size: 20px; /* Aumenta el tamaño del texto, ajusta según necesites */
+  color: #000; /* Asegura que el texto sea de color oscuro, ajusta si es necesario */
+  text-align: center; /* Centra el texto dentro del contenedor, si lo deseas */
+}

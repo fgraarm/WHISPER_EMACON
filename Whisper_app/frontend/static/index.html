@@ -1,77 +1,26 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transcripción de Audio con Whisper</title>
-    <link rel="stylesheet" href="/css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Page</title>
+<script src="../scripts/script.js"></script> <!-- Ajusta la ruta según la ubicación real del script -->
+<link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
-    <div class="container">
-        <h1>Transcripción de Audio con Whisper</h1>
-         <h2 class="section-title">CONFIGURACION</h2>
-        <div class="form-group">
-            <label for="model-select">Seleccionar modelo:</label>
-            <select id="model-select" name="model" class="select-style">
-                <option value="tiny">Tiny</option>
-                <option value="base">Base</option>
-                <option value="small">Small</option>
-                <option value="medium">Medium</option>
-                <option value="large">Large</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="language-input">Idioma (opcional):</label>
-            <input type="text" id="language-input" name="language" class="input-style" placeholder="ej. es, en, ru, fr">
-        </div>
-        <h2 class="section-title">IMPORTACIÓN DE ARCHIVOS DE AUDIO</h2>
-        <form id="upload-form" class="form-style">
-            <div class="form-group">
-                <label for="audio-file">Subir archivo de audio:</label>
-                <input type="file" id="audio-file" name="audio-file" accept="audio/*">
-            </div>
-            <div class="form-group">
-        <input type="checkbox" id="include-timestamps" name="include-timestamps">
-        <label for="include-timestamps">Incluir Timestamps</label>
-           </div>
-            <button type="submit" class="btn">Transcribir</button>
-            <img id="loading" class="loading" src="/images/loading.gif" style="display:none;"/>
-        </form>
-        <h2 class="section-title">GRABACIÓN EN TIEMPO REAL DE AUDIO</h2>
-        <button id="record-btn" class="btn">Iniciar Grabación</button>
-        <button id="stop-btn" class="btn" style="display:none;">Detener Grabación</button>
-        <img id="recording-gif" class= "recording" src="/images/recording.gif" style="display:none;"/>
-         <h2 class="section-title">TRADUCCION</h2>
-        <button id="translate-btn" class="btn">Traducir</button>
-        <img id="translating-gif" src="/images/translating.gif" class= "translating" style="display:none;"/>
+<body class="background-cover">
 
-                <!-- Selector de idioma de origen -->
-  <select id="source-lang-select" class="select-style">
-            <option value="es">Español</option>
-            <option value="en">Inglés</option>
-            <option value="ru">Ruso</option>
-            <option value="fr">Francés</option>
-            
-        </select>
-        <!-- Selector de idioma de destino -->
-        <select id="target-lang-select" class="select-style">
-            <option value="es">Español</option>
-            <option value="en">Inglés</option>
-            <option value="ru">Ruso</option>
-            <option value="fr">Francés</option>
-            
-        </select>
+<div class="min-h-screen bg-black bg-opacity-50 flex flex-col justify-center items-center">
+  <div class="crest mb-8"></div>
 
-    <!-- Añade más opciones según los idiomas que desees soportar -->
+  <nav>
+    <ul>
+      <li><a href="acercade.html">ACERCA DE WHISPER EMACON</a></li>
+      <li><a href="usoherramienta.html">USAR LA HERRAMIENTA</a></li>
+    </ul>
+  </nav>
 
-<div id="transcription-result" class="transcription-box"></div>
-<div id="translation-result" class="transcription-box2"></div>
-        
-    </div>
-    <div class="emad-container">
-        <img id="EMAD-jpg" class= "EMAD" src="/images/EMAD.jpg" alt="EMAD" />
-    </div>
-    <script src="/scripts/script.js"></script>
+</div>
+
 </body>
 </html>
 

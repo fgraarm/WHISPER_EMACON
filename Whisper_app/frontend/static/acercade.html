@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acerca de Whisper Emacon</title>
+<style>
+  body {
+    display: flex;
+    flex-direction: column; /* Orientación vertical */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+
+  .background-flag {
+    background-image: url('../images/bandera.jpg');
+    background-size: contain; /* La imagen se ajusta sin cortarse */
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 50%; /* Tamaño de la imagen */
+    height: 300px; /* Altura del contenedor de la imagen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 20px; /* Espacio entre la imagen y los enlaces */
+  }
+
+  .text {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0; /* Elimina el margen por defecto */
+    display: flex;
+    justify-content: center; /* Centra los enlaces horizontalmente */
+    background-color: #333;
+    width: 100%; /* Opcional: Ajusta según el diseño deseado */
+    box-sizing: border-box; /* Asegura que padding y border estén incluidos en el ancho definido */
+  }
+
+  nav li {
+    display: block;
+  }
+
+  nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  nav li a:hover {
+    background-color: #111;
+  }
+</style>
+</head>
+<body>
+
+<div class="background-flag">
+  <div class="text">
+    Esta herramienta está en fase BETA, La intención es que sea capaz de transcribir una reunión o transcribir archivos importados de audio. Si no se dispone de GPU se recomienda usar solo los modelos Tiny y Base. Existe la posibilidad de traducir la transcripción a los idiomas disponibles.
+  </div>
+</div>
+
+<nav>
+  <ul>
+    <li><a href="index.html">INICIO</a></li>
+    <li><a href="acercade.html">ACERCA DE WHISPER EMACON</a></li>
+    <li><a href="usoherramienta.html">USAR LA HERRAMIENTA</a></li>
+  </ul>
+</nav>
+
+</body>
+</html>
+
