@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transcripción de Audio con Whisper</title>
+    <style>
+    body, html {
+        font-family: Arial, sans-serif;
+        padding: 0;
+        margin: 0;
+        background-color: #f0f0f0;
+    }
+
+    .container {
+        width: 80%;
+        margin: auto;
+        margin-top: 20px;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        border-radius: 8px;
+    }
+
+    .form-style {
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    .select-style,
+    .input-style {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        box-sizing: border-box; /* Makes sure padding does not affect overall width */
+    }
+
+    .btn {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 5px;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+    .transcription-box {
+        margin-top: 20px;
+        font-weight: bold;
+        background-color: #eee;
+        padding: 10px;
+        border-radius: 4px;
+        min-height: 50px; /* Gives the box a minimum height */
+    }
+    .transcription-box2 {
+        margin-top: 20px;
+        background-color: #eee;
+        color: blue;
+        font-weight: normal;
+        padding: 10px;
+        border-radius: 4px;
+        min-height: 50px; /* Gives the box a minimum height */
+    }
+    .loading {
+        display: none;
+        width: 50px;
+        height: auto;
+        margin: 10px auto;
+    }
+    .recording {
+        display: none;
+        width: 200px;
+        height: auto;
+        margin: 10px auto;
+    }
+    .translating {
+        display: none;
+        width: 100px;
+        height: auto;
+        margin: 10px auto;
+    }
+    .EMAD {
+        width: 300px; /* o el tamaño que prefieras */
+        height: auto; /* mantiene las proporciones de la imagen */
+        display: block; /* Esto asegura que la imagen se trate como un bloque y pueda centrarse */
+        margin: 30px auto; /* Esto centra la imagen horizontalmente y añade margen arriba y abajo */
+    }
+
+    /* Contenedor para la imagen EMAD */
+    .emad-container {
+        text-align: center; /* Esto centra la imagen si display es inline o inline-block */
+        margin-top: 20px; /* Espacio adicional arriba si es necesario */
+        margin-bottom: 20px; /* Espacio adicional abajo si es necesario */
+    }
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0; /* Elimina el margen por defecto */
+      display: flex;
+      justify-content: center; /* Centra los enlaces horizontalmente */
+      background-color: #333;
+      width: 100%; /* Opcional: Ajusta según el diseño deseado */
+      box-sizing: border-box; /* Asegura que padding y border estén incluidos en el ancho definido */
+    }
+
+    nav li {
+      display: block;
+    }
+
+    nav li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    nav li a:hover {
+      background-color: #111;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Transcripción de Audio con Whisper</h1>
+         <h2 class="section-title">CONFIGURACION</h2>
+        <div class="form-group">
+            <label for="model-select">Seleccionar modelo:</label>
+            <select id="model-select" name="model" class="select-style">
+                <option value="tiny">Tiny</option>
+                <option value="base">Base</option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="language-input">Idioma (opcional):</label>
+            <input type="text" id="language-input" name="language" class="input-style" placeholder="ej. es, en, ru, fr">
+        </div>
+        <h2 class="section-title">IMPORTACIÓN DE ARCHIVOS DE AUDIO</h2>
+        <form id="upload-form" class="form-style">
+            <div class="form-group">
+                <label for="audio-file">Subir archivo de audio:</label>
+                <input type="file" id="audio-file" name="audio-file" accept="audio/*">
+            </div>
+            <div class="form-group">
+        <input type="checkbox" id="include-timestamps" name="include-timestamps">
+        <label for="include-timestamps">Incluir Timestamps</label>
+           </div>
+            <button type="submit" class="btn">Transcribir</button>
+            <img id="loading" class="loading" src="/images/loading.gif" style="display:none;"/>
+        </form>
+        <h2 class="section-title">GRABACIÓN EN TIEMPO REAL DE AUDIO</h2>
+        <button id="record-btn" class="btn">Iniciar Grabación</button>
+        <button id="stop-btn" class="btn" style="display:none;">Detener Grabación</button>
+        <img id="recording-gif" class= "recording" src="/images/recording.gif" style="display:none;"/>
+         <h2 class="section-title">TRADUCCION</h2>
+        <button id="translate-btn" class="btn">Traducir</button>
+        <img id="translating-gif" src="/images/translating.gif" class= "translating" style="display:none;"/>
+
+                <!-- Selector de idioma de origen -->
+  <select id="source-lang-select" class="select-style">
+            <option value="es">Español</option>
+            <option value="en">Inglés</option>
+            <option value="ru">Ruso</option>
+            <option value="fr">Francés</option>
+            
+        </select>
+        <!-- Selector de idioma de destino -->
+        <select id="target-lang-select" class="select-style">
+            <option value="es">Español</option>
+            <option value="en">Inglés</option>
+            <option value="ru">Ruso</option>
+            <option value="fr">Francés</option>
+            
+        </select>
+
+    <!-- Añade más opciones según los idiomas que desees soportar -->
+
+<div id="transcription-result" class="transcription-box"></div>
+<div id="translation-result" class="transcription-box2"></div>
+        
+    </div>
+    <nav>
+      <ul>
+       <li><a href="{{ url_for('acerca_de') }}">ACERCA DE WHISPER EMACON</a></li>
+    <li><a href="{{ url_for('index') }}">INICIO</a></li>
+      </ul>
+    </nav>
+    <div class="emad-container">
+        <img id="EMAD-jpg" class= "EMAD" src="../images/EMAD.jpg" alt="EMAD" />
+    </div>
+    <script src="/scripts/script.js"></script>
+</body>
+</html>
+
