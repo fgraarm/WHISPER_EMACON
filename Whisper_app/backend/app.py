@@ -4,6 +4,7 @@ from whisper_integration import transcribe_audio
 from audio_recording import start_recording, get_next_transcription, stop_recording  # Asegúrate de importar stop_recording
 from transformers import pipeline
 import os
+import logging
 
 # Inicializa la pipeline de traducción
 translators = {
@@ -23,8 +24,37 @@ translators = {
 frontend_dir = os.path.abspath("../frontend")
 
 app = Flask(__name__, static_folder=frontend_dir, template_folder=frontend_dir)
+app_logs = []  # Esta lista almacenará los logs
+
+class MemoryHandler(logging.Handler):
+    def emit(self, record):
+        # Aquí es donde añadimos el mensaje de log a la lista app_logs
+        app_logs.append(self.format(record))
+
+# Configuramos el nivel de log a DEBUG para capturar todos los mensajes
+app.logger.setLevel(logging.DEBUG)
+
+# Creamos un manejador que usa nuestra clase MemoryHandler
+memory_handler = MemoryHandler()
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+memory_handler.setFormatter(formatter)
+
+# Añadimos nuestro manejador de memoria al logger de la aplicación y al logger de werkzeug
+app.logger.addHandler(memory_handler)
+logging.getLogger('werkzeug').addHandler(memory_handler)
+
+@app.route('/logs')
+def logs():
+    """Ruta para servir la página de logs."""
+    return render_template('/templates/logs.html')
+
+@app.route('/get_logs', methods=['GET'])
+def get_logs():
+    """Endpoint para obtener los logs acumulados."""
+    return jsonify({"logs": app_logs})
 
 @app.route('/translate', methods=['POST'])
+
 def translate_text():
     data = request.json
     source_text = data['text']
@@ -58,7 +88,7 @@ def index():
 
 @app.route('/acerca-de')
 def acerca_de():
-    return render_template('templates/acercade.html')
+    return render_template('/templates/acercade.html')
 
 @app.route('/uso-herramienta')
 def uso_herramienta():
