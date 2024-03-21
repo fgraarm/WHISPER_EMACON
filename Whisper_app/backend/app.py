@@ -5,6 +5,8 @@ from audio_recording import start_recording, get_next_transcription, stop_record
 from transformers import pipeline
 import os
 import logging
+import sys
+
 
 # Inicializa la pipeline de traducción
 translators = {
@@ -24,7 +26,17 @@ translators = {
 frontend_dir = os.path.abspath("../frontend")
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-app = Flask(__name__, static_folder=os.path.join(basedir, '../frontend/static'), template_folder=os.path.join(basedir, '../frontend/templates'))
+# Verifica si la aplicación se está ejecutando como un ejecutable de PyInstaller
+if getattr(sys, 'frozen', False):
+    # Si es así, utiliza la carpeta temporal establecida por PyInstaller
+    template_folder = os.path.join(sys._MEIPASS, 'frontend/templates')
+    static_folder = os.path.join(sys._MEIPASS, 'frontend/static')
+else:
+    # De lo contrario, utiliza las rutas normales
+    frontend_dir = os.path.abspath("../frontend")
+    template_folder = os.path.join(frontend_dir, 'templates')
+    static_folder = os.path.join(frontend_dir, 'static')
+app = Flask(__name__, static_folder=static_folder, template_folder=template_folder)
 app_logs = []  # Esta lista almacenará los logs
 
 class MemoryHandler(logging.Handler):
