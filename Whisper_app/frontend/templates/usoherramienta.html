@@ -159,7 +159,7 @@
         <label for="include-timestamps">Incluir Timestamps</label>
            </div>
             <button type="submit" class="btn">Transcribir</button>
-            <img id="loading" class="loading" src="/images/loading.gif" style="display:none;"/>
+            <img id="loading" class="loading" src="static/images/loading.gif" style="display:none;"/>
         </form>
         <h2 class="section-title">GRABACIÓN EN TIEMPO REAL DE AUDIO</h2>
         <button id="record-btn" class="btn">Iniciar Grabación</button>
@@ -167,7 +167,7 @@
         <img id="recording-gif" class= "recording" src="/images/recording.gif" style="display:none;"/>
          <h2 class="section-title">TRADUCCION</h2>
         <button id="translate-btn" class="btn">Traducir</button>
-        <img id="translating-gif" src="/images/translating.gif" class= "translating" style="display:none;"/>
+        <img id="translating-gif" src="static/images/translating.gif" class= "translating" style="display:none;"/>
 
                 <!-- Selector de idioma de origen -->
   <select id="source-lang-select" class="select-style">
@@ -200,9 +200,9 @@
       </ul>
     </nav>
     <div class="emad-container">
-        <img id="EMAD-jpg" class= "EMAD" src="../images/EMAD.jpg" alt="EMAD" />
+        <img id="EMAD-jpg" class= "EMAD" src="../static/images/EMAD.jpg" alt="EMAD" />
     </div>
-    <script src="/scripts/script.js"></script>
+   <script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
 </body>
 </html>
 

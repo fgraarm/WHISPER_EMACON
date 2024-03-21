@@ -22,8 +22,9 @@ translators = {
 
 # Definir la ruta al directorio frontend
 frontend_dir = os.path.abspath("../frontend")
+basedir = os.path.abspath(os.path.dirname(__file__))
 
-app = Flask(__name__, static_folder=frontend_dir, template_folder=frontend_dir)
+app = Flask(__name__, static_folder=os.path.join(basedir, '../frontend/static'), template_folder=os.path.join(basedir, '../frontend/templates'))
 app_logs = []  # Esta lista almacenará los logs
 
 class MemoryHandler(logging.Handler):
@@ -46,7 +47,7 @@ logging.getLogger('werkzeug').addHandler(memory_handler)
 @app.route('/logs')
 def logs():
     """Ruta para servir la página de logs."""
-    return render_template('/templates/logs.html')
+    return render_template('logs.html')
 
 @app.route('/get_logs', methods=['GET'])
 def get_logs():
@@ -84,15 +85,15 @@ def translate_text():
 @app.route('/')
 def index():
     """Ruta para servir la página de inicio."""
-    return render_template('/templates/index.html')
+    return render_template('index.html')
 
 @app.route('/acerca-de')
 def acerca_de():
-    return render_template('/templates/acercade.html')
+    return render_template('acercade.html')
 
 @app.route('/uso-herramienta')
 def uso_herramienta():
-    return render_template('/templates/usoherramienta.html')
+    return render_template('usoherramienta.html')
 
 @app.route('/transcribe', methods=['POST'])
 def transcribe():
@@ -159,4 +160,4 @@ def static_proxy(path):
     return send_from_directory(frontend_dir, path)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host='0.0.0.0' , port=5000)
