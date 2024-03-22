@@ -7,6 +7,8 @@ INSTRUCCIONES INSTALACION:
 Ffmpeg debe estar instalado
 Colocar la carpeta Whisper-dep (whisper depurado) donde se desee
 en un entorno virtualizado con anaconda por ejemplo instalar las siguientes librerias , todas con PIP
+El archivo requirements.txt está disponible dentro de /Backend para la instalacion rapida de las librerias necesarias
+si se hace paso por paso
 0. pip install -U Flask
 1. pip install -U openai-whisper  
 ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
@@ -27,4 +29,5 @@ Se debe ajustar la ubicacion de la liberia de whisper instalada.
 
 El ejecutable se lleva whisper y todas las librerias necesarias, ya no hace falta el entorno virtual.
 
+EL SERVIDOR WEB SE LEVANTA AL POCO TIEMPO EN LOCALHOST:5000
 PROXIMAS ACTUALIZACIONES: DIARIZACION, ELIMINACION RUIDO....
