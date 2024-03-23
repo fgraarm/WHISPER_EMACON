@@ -24,8 +24,8 @@ noisereduce 3.0.0 requires scipy, which is not installed.
 10. pip install –U sacremoses
 
 pip install –U pyinstaller, para compilar la aplicación en .exe
-Desde raíz: pyinstaller -F --add-data "C:\Users\fgraa\.conda\envs\Whisperdepurado\Lib\site-packages\whisper;whisper" --add-data "frontend/templates;frontend/templates" --add-data "frontend/static;frontend/static" backend/app.py
-Se debe ajustar la ubicacion de la liberia de whisper instalada.
+Desde raíz: pyinstaller -F --add-data "C:\Users\XXXXUSUARIOXXX\.conda\envs\Whisperdepurado\Lib\site-packages\whisper;whisper" --add-data "frontend/templates;frontend/templates" --add-data "frontend/static;frontend/static" backend/app.py
+Se debe ajustar la ubicacion de la liberia de whisper instalada. en mi caso use conda
 
 El ejecutable se lleva whisper y todas las librerias necesarias, ya no hace falta el entorno virtual.
 
