@@ -9,6 +9,9 @@ def transcribe_audio(file_path, model_name='tiny', language=None, includeTimesta
     :param language: El idioma del audio, si se conoce.
     :return: Texto transcrito del audio.
     """
+    language_msg = language if language else "no especificado"
+    print(f"Transcribiendo con el modelo Whisper '{model_name}' y el idioma '{language_msg}'...")
+    
     # Cargar el modelo Whisper
     model = whisper.load_model(model_name)
     

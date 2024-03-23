@@ -53,6 +53,9 @@ def process_audio_files_thread(model, language, transcriptions_queue):
 def start_recording(model, language=None):
     global is_recording
     is_recording = True
+    # Imprimir el modelo y el idioma elegido para la transcripción en tiempo real
+    language_msg = language if language else "no especificado"
+    print(f"Iniciando grabación en tiempo real con el modelo Whisper '{model}' y el idioma '{language_msg}'...")
     # Hilo para grabar audio y añadirlo a la cola
     recording_thread = threading.Thread(target=recording_and_transcription_thread, args=(model, language))
     recording_thread.daemon = True
