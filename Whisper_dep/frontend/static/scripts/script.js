@@ -64,7 +64,7 @@ let recordingInterval;
     })
     .then(() => {
         setLoading(false); // Ocultar GIF de carga
-        recordingInterval = setInterval(fetchTranscription, 20000); // Cada 20 segundos
+        recordingInterval = setInterval(fetchTranscription, 60000); // Cada 60 segundos
     })
     .catch(error => {
        document.getElementById('recording-gif').style.display = 'none'; // Asegúrate de ocultar el GIF si hay un error

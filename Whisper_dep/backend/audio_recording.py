@@ -10,7 +10,7 @@ is_recording = False  # Interruptor para controlar la grabación
 audio_files_queue = queue.Queue()  # Cola para guardar rutas de archivos de audio temporales
 transcriptions_queue = queue.Queue()  # Cola para guardar las transcripciones acumuladas
 
-def record_audio_segment(fs=44100, segment_duration=20):
+def record_audio_segment(fs=44100, segment_duration=60):
     """
     Graba un segmento de audio del micrófono de corta duración.
 
@@ -38,7 +38,7 @@ def save_temp_audio(recording, fs=44100):
 def recording_and_transcription_thread(model, language):
     global is_recording
     while is_recording:
-        recording = record_audio_segment(segment_duration=20)  # Grabar segmento
+        recording = record_audio_segment(segment_duration=60)  # Grabar segmento
         audio_file_path = save_temp_audio(recording)
         audio_files_queue.put(audio_file_path)  # Añadir archivo a la cola
 
@@ -65,7 +65,7 @@ def start_recording(model, language=None):
 def stop_recording():
     global is_recording
     is_recording = False  # Desactivar la grabación
-
+    print("Grabación finalizada")
 def get_next_transcription():
     """
     Obtiene la próxima transcripción de la cola si está disponible.
@@ -74,8 +74,3 @@ def get_next_transcription():
     """
     return transcriptions_queue.get() if not transcriptions_queue.empty() else None
 
-if __name__ == "__main__":
-    # Esto es solo para fines de demostración
-    print("Iniciando la grabación y transcripción de prueba...")
-    start_recording('tiny')
-    # Aquí podrías añadir lógica para esperar cierto tiempo o para detener la grabación basada en alguna condición

@@ -17,7 +17,7 @@ def transcribe_audio(file_path, model_name='tiny', language=None, includeTimesta
     
     # Realizar la transcripción
     result = model.transcribe(file_path, **options)
-    
+    print("Transcripción con Whisper finalizada")
     if includeTimestamps:
         # Procesar la salida para incluir timestamps
         # La siguiente es una forma simplificada y necesitarás ajustarla según tus necesidades específicas
