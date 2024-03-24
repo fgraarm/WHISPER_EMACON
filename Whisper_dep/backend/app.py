@@ -75,7 +75,7 @@ def diarize():
     file = request.files['file']
     if file.filename == '':
         return jsonify({"error": "No selected file"}), 400
-
+    
     # Aquí asumo que ya tienes un directorio de 'uploads' donde guardas los archivos
     uploads_dir = os.path.join(os.getcwd(), 'uploads')
     file_path = os.path.join(uploads_dir, file.filename)
@@ -87,7 +87,9 @@ def diarize():
     max_diarization_speakers = int(request.form.get('max_diarization_speakers', '5'))  # Establece esto según tus necesidades
 
     # Llamar a la función diarization con todos los argumentos necesarios
-    speakers = diarize_and_transcribe(file_path, audio_output_path, min_diarization_speakers, max_diarization_speakers)
+    model = request.form.get('model', 'base')
+    language = request.form.get('language', None)
+    speakers = diarize_and_transcribe(file_path, audio_output_path, min_diarization_speakers, max_diarization_speakers, model, language)
 
     # Haz lo que necesites con los resultados
     # Por ejemplo, devolver los resultados de la diarización
