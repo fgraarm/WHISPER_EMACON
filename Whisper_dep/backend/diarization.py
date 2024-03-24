@@ -70,8 +70,8 @@ def diarize_and_transcribe(audio_input_path, audio_output_path, min_speakers=Non
 
             # Aquí aplicamos el formateo necesario antes de agregarlo a los resultados
             speaker_id = speaker.replace("SPEAKER_", "")
-            speaker_prefix = speaker_id if speaker_id in previous_speakers else f"SPEAKER_{speaker_id}"
-            previous_speakers.add(speaker_id)
+            speaker_prefix = f"SPEAKER_{speaker_id}"
+           
             
             formatted_start = "{:.2f}".format(start)
             formatted_end = "{:.2f}".format(end)
