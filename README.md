@@ -22,6 +22,7 @@ noisereduce 3.0.0 requires scipy, which is not installed.
 8. pip install -U Transformers
 9. pip install -U sentencepiece
 10. pip install –U sacremoses
+11. pip install -U pyannote.audio  DIARIZACION
 
 pip install –U pyinstaller, para compilar la aplicación en .exe
 Desde raíz: pyinstaller -F --add-data "C:\Users\XXXXUSUARIOXXX\.conda\envs\XXXNOMBREENTORNOVIRTUALXXX\Lib\site-packages\whisper;whisper" --add-data "frontend/templates;frontend/templates" --add-data "frontend/static;frontend/static" backend/app.py
