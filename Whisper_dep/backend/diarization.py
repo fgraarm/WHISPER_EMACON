@@ -23,7 +23,7 @@ def convert_to_wav(audio_input_path, target_sr=16000):
     sf.write(temp_wav_path, audio.astype(np.float32), target_sr)  # Asegúrate de convertir a float32
     return temp_wav_path
 
-def diarize_and_transcribe(audio_input_path, audio_output_path, min_speakers=None, max_speakers=None):
+def diarize_and_transcribe(audio_input_path, audio_output_path, min_speakers=None, max_speakers=None, model_name="base", language=None):
     converted_audio_path = convert_to_wav(audio_input_path)
     
     try:
@@ -35,7 +35,10 @@ def diarize_and_transcribe(audio_input_path, audio_output_path, min_speakers=Non
     
     diarization_result = diarization_pipeline({'uri': 'example', 'audio': converted_audio_path}, min_speakers=min_speakers, max_speakers=max_speakers)
 
-    model = whisper.load_model("base")
+    model = whisper.load_model(model_name)
+    options = {"language": language} if language else {}
+    print(f"Utilizando el modelo Whisper '{model_name}' para la diarización.")
+    print(f"Idioma para la transcripción: {'Automático' if not language else language}")
     transcription_results = []
 
     for segment, _, speaker in diarization_result.itertracks(yield_label=True):
@@ -48,7 +51,7 @@ def diarize_and_transcribe(audio_input_path, audio_output_path, min_speakers=Non
             audio_buffer.seek(0)
             audio_np, _ = sf.read(audio_buffer, dtype='float32')  # Asegúrate de leer como float32
 
-            result = model.transcribe(audio_np)
+            result = model.transcribe(audio_np, **options)
             transcript = result["text"]
 
             transcription_results.append({
