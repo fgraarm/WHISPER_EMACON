@@ -53,7 +53,7 @@ def diarize_and_transcribe(audio_input_path, audio_output_path, min_speakers=Non
     print(f"Utilizando el modelo Whisper '{model_name}' para la diarización.")
     print(f"Idioma para la transcripción: {'Automático' if not language else language}")
     
-    previous_speakers = set()
+    
     transcription_results_json = []
     for segment, _, speaker in diarization_result.itertracks(yield_label=True):
         start, end = segment.start, segment.end
