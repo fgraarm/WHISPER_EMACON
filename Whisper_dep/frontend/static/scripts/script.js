@@ -15,19 +15,40 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
     formData.append('file', document.getElementById('audio-file').files[0]);
     formData.append('model', document.getElementById('model-select').value);
     formData.append('language', document.getElementById('language-input').value);
-    formData.append('includeTimestamps', document.getElementById('include-timestamps').checked);
+    formData.append('outputOption', document.getElementById('output-option').value);
 
-    fetch('/transcribe', {
+    let endpoint = '/transcribe';
+    if (document.getElementById('output-option').value === 'diarization') {
+        endpoint = '/diarize';
+    }
+
+    fetch(endpoint, {
         method: 'POST',
         body: formData,
     })
     .then(response => response.json())
     .then(data => {
-        setLoading(false); // Ocultar GIF de carga
-        document.getElementById('transcription-result').textContent = data.transcript;
+        setLoading(false);
+        console.log(data); // Depuración: Verifica la respuesta del servidor
+        if (endpoint === '/diarize') {
+    if (data.diarization && data.diarization.length > 0) {
+        let diarizationResult = '<ul>';
+        data.diarization.forEach(segment => {
+            diarizationResult += `<li>[${segment.start}-${segment.end}] SPEAKER_${segment.speaker}: ${segment.transcript}</li>`;
+        });
+        diarizationResult += '</ul>';
+        document.getElementById('transcription-result').innerHTML = diarizationResult;
+    } else {
+        document.getElementById('transcription-result').textContent = "No se encontraron resultados de diarización.";
+    }
+} else {
+    document.getElementById('transcription-result').textContent = data.transcript || data.translation;
+}
+          
+        
     })
     .catch(error => {
-        setLoading(false); // Ocultar GIF de carga en caso de error
+        setLoading(false);
         console.error('Error:', error);
     });
 });

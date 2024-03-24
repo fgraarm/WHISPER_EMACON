@@ -6,6 +6,7 @@ from transformers import pipeline
 import os
 import logging
 import sys
+from diarization import diarize_and_transcribe  # Asegúrate de importar la función correctamente
 
 
 # Inicializa la pipeline de traducción
@@ -66,8 +67,34 @@ def get_logs():
     """Endpoint para obtener los logs acumulados."""
     return jsonify({"logs": app_logs})
 
-@app.route('/translate', methods=['POST'])
+@app.route('/diarize', methods=['POST'])
+def diarize():
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
 
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+
+    # Aquí asumo que ya tienes un directorio de 'uploads' donde guardas los archivos
+    uploads_dir = os.path.join(os.getcwd(), 'uploads')
+    file_path = os.path.join(uploads_dir, file.filename)
+    file.save(file_path)
+
+    # Definir valores para los argumentos faltantes
+    audio_output_path = "C:/Users/fgraa/Whisper_dep/backend/output"  # Cambia esto por tu directorio de salida real
+    min_diarization_speakers = int(request.form.get('min_diarization_speakers', '2'))  # Establece esto según tus necesidades
+    max_diarization_speakers = int(request.form.get('max_diarization_speakers', '5'))  # Establece esto según tus necesidades
+
+    # Llamar a la función diarization con todos los argumentos necesarios
+    speakers = diarize_and_transcribe(file_path, audio_output_path, min_diarization_speakers, max_diarization_speakers)
+
+    # Haz lo que necesites con los resultados
+    # Por ejemplo, devolver los resultados de la diarización
+    print(jsonify({"diarization": speakers}))
+    return jsonify({"diarization": speakers})
+    
+@app.route('/translate', methods=['POST'])
 def translate_text():
     data = request.json
     source_text = data['text']
@@ -112,26 +139,36 @@ def transcribe():
     """Endpoint para transcribir archivos de audio."""
     if 'file' not in request.files:
         return jsonify({"error": "No file part"}), 400
-    
+
     file = request.files['file']
-    model = request.form.get('model', 'tiny')
-    language = request.form.get('language', None)
-    includeTimestamps = 'includeTimestamps' in request.form and request.form['includeTimestamps'] == 'true'
-    
     if file.filename == '':
         return jsonify({"error": "No selected file"}), 400
-    
-    if file and allowed_file(file.filename):
-        uploads_dir = os.path.join(os.getcwd(), 'uploads')
-        os.makedirs(uploads_dir, exist_ok=True)
-        filename = os.path.join(uploads_dir, secure_filename(file.filename))
-        file.save(filename)
-        
-        # Llamada a la función de transcripción
+
+    if not allowed_file(file.filename):
+        return jsonify({"error": "File type not allowed"}), 400
+
+    # Obtén el modelo, el idioma y la opción de salida desde el formulario
+    model = request.form.get('model', 'tiny')
+    language = request.form.get('language', None)
+    output_option = request.form.get('outputOption', 'none')
+
+    # Define la variable includeTimestamps basada en la opción de salida
+    includeTimestamps = (output_option == 'timestamps')
+
+    uploads_dir = os.path.join(os.getcwd(), 'uploads')
+    os.makedirs(uploads_dir, exist_ok=True)
+    filename = os.path.join(uploads_dir, secure_filename(file.filename))
+    file.save(filename)
+
+    # Si la opción es diarización, llama a diarize_audio
+    if output_option == 'diarization':
+        speakers = diarize_and_transcribe(filename)
+        os.remove(filename)  # Asegúrate de eliminar el archivo después de procesarlo
+        return jsonify({"diarization": speakers})
+    else:
+        # Para otras opciones, incluyendo timestamps o ninguna, llama a transcribe_audio
         transcript = transcribe_audio(filename, model, language, includeTimestamps)
-        # Eliminar el archivo de audio importado una vez transcribido
-        os.remove(filename)  # Añadido para eliminar el archivo después de la transcripción
-        
+        os.remove(filename)  # Asegúrate de eliminar el archivo después de procesarlo
         return jsonify({"transcript": transcript})
  
 
