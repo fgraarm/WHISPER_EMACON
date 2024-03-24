@@ -1,13 +1,13 @@
-Speaker SPEAKER_01: 1.2818336162988115-1.6723259762309 ->  ¿Sí?
-Speaker SPEAKER_01: 2.2835314091680816-3.4210526315789473 ->  Hola, soy Ana.
-Speaker SPEAKER_01: 4.168081494057725-5.203735144312395 ->  ¿Qué tal, nana?
-Speaker SPEAKER_01: 5.797962648556876-6.324278438030561 ->  ¡Pierre!
-Speaker SPEAKER_01: 6.663837011884551-9.584040747028864 ->  Quedamos para ir a la pastelería para comprar.
-Speaker SPEAKER_01: 10.076400679117148-10.908319185059424 ->  ¿A qué hora?
-Speaker SPEAKER_00: 11.434634974533108-12.911714770797964 ->  ¡Ala!
-Speaker SPEAKER_00: 13.641765704584042-14.219015280135824 ->  5
-Speaker SPEAKER_00: 14.67741935483871-16.17147707979627 ->  ¿Es un poco pronto?
-Speaker SPEAKER_00: 16.629881154499152-18.140916808149406 ->  Vale pues, ¿alaséis?
-Speaker SPEAKER_00: 18.70118845500849-19.499151103565367 ->  Venga, sí.
-Speaker SPEAKER_00: 20.11035653650255-21.36672325976231 ->  mal y este q wall
-Speaker SPEAKER_00: 21.99490662139219-22.707979626485567 ->  Adiós.
+1.28-1.67 SPEAKER_01:  ¡Tien!
+2.28-3.42 01:  ¡O la soñana!
+4.17-5.20 01:  ¡Qué tal, Ana!
+5.80-6.32 01:  ¡Pierta!
+6.66-9.58 01:  Que vamos para ir a la pastella y a para comprar.
+10.08-10.91 01:  ¡Aquí una!
+11.43-12.91 SPEAKER_00:  A laa
+13.64-14.22 00:  ¡Pingo!
+14.68-16.17 00:  Hasta mejor!
+16.63-18.14 00: aleda por Tucker mi día Builtí
+18.70-19.50 00:  ¡ tantas folias!
+20.11-21.37 00:  ¿Me al約 está bien, no?
+21.99-22.71 00: 
