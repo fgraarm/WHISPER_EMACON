@@ -29,12 +29,11 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
     .then(response => response.json())
     .then(data => {
         setLoading(false);
-        console.log(data); // Depuración: Verifica la respuesta del servidor
         if (endpoint === '/diarize') {
     if (data.diarization && data.diarization.length > 0) {
         let diarizationResult = '<ul>';
         data.diarization.forEach(segment => {
-            diarizationResult += `<li>[${segment.start}-${segment.end}] SPEAKER_${segment.speaker}: ${segment.transcript}</li>`;
+                    diarizationResult += `<li>${segment.start}-${segment.end} ${segment.speaker}: ${segment.transcript}</li>`;
         });
         diarizationResult += '</ul>';
         document.getElementById('transcription-result').innerHTML = diarizationResult;

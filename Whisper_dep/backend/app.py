@@ -85,16 +85,18 @@ def diarize():
     audio_output_path = "C:/Users/fgraa/Whisper_dep/backend/output"  # Cambia esto por tu directorio de salida real
     min_diarization_speakers = int(request.form.get('min_diarization_speakers', '2'))  # Establece esto según tus necesidades
     max_diarization_speakers = int(request.form.get('max_diarization_speakers', '5'))  # Establece esto según tus necesidades
-
-    # Llamar a la función diarization con todos los argumentos necesarios
     model = request.form.get('model', 'base')
     language = request.form.get('language', None)
-    speakers = diarize_and_transcribe(file_path, audio_output_path, min_diarization_speakers, max_diarization_speakers, model, language)
+
+    # Llamar a la función diarization con todos los argumentos necesarios
+   
+
+    formatted_results = diarize_and_transcribe(file_path, audio_output_path, min_diarization_speakers, max_diarization_speakers, model, language)
 
     # Haz lo que necesites con los resultados
     # Por ejemplo, devolver los resultados de la diarización
-    print(jsonify({"diarization": speakers}))
-    return jsonify({"diarization": speakers})
+    return jsonify({"diarization": formatted_results})
+
     
 @app.route('/translate', methods=['POST'])
 def translate_text():
