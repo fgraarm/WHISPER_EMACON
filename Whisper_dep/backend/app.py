@@ -77,12 +77,15 @@ def diarize():
         return jsonify({"error": "No selected file"}), 400
     
     # Aquí asumo que ya tienes un directorio de 'uploads' donde guardas los archivos
+    
     uploads_dir = os.path.join(os.getcwd(), 'uploads')
+    os.makedirs(uploads_dir, exist_ok=True)  # Crea la carpeta si no existe
     file_path = os.path.join(uploads_dir, file.filename)
     file.save(file_path)
 
     # Definir valores para los argumentos faltantes
     audio_output_path = "C:/Users/fgraa/Whisper_dep/backend/output"  # Cambia esto por tu directorio de salida real
+    os.makedirs(audio_output_path, exist_ok=True)
     min_diarization_speakers = int(request.form.get('min_diarization_speakers', '2'))  # Establece esto según tus necesidades
     max_diarization_speakers = int(request.form.get('max_diarization_speakers', '5'))  # Establece esto según tus necesidades
     model = request.form.get('model', 'base')
