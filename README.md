@@ -35,4 +35,25 @@ Se debe ajustar la ubicacion de la liberia de whisper instalada. en mi caso use 
 El ejecutable se lleva whisper y todas las librerias necesarias, ya no hace falta el entorno virtual.
 
 EL SERVIDOR WEB SE LEVANTA AL POCO TIEMPO EN LOCALHOST:5000
-PROXIMAS ACTUALIZACIONES:  ELIMINACION RUIDO....
+
+DIAGRAMA DE INTERCAMBIO DE INFORMACION 
+Cliente -> Servidor: POST /record
+Servidor -> audio_recording: start_recording(model, language)
+audio_recording -> whisper_integration: transcribe_audio(file_path, model_name, language)
+audio_recording -> Cliente: Transcripción en tiempo real
+Cliente -> Servidor: POST /stop_record
+Servidor -> audio_recording: stop_recording()
+Cliente -> Servidor: POST /transcribe (carga archivo)
+Servidor -> whisper_integration: transcribe_audio(file_path, model_name, language)
+Servidor -> Cliente: Transcripción del archivo
+Cliente -> Servidor: POST /diarize (carga archivo)
+Servidor -> diarization: diarize_and_transcribe(audio_input_path, audio_output_path, min_speakers, max_speakers, model_name, language)
+diarization -> whisper_integration: transcribe_audio(segment_path, model_name, language)
+Servidor -> Cliente: Resultados de la diarización
+Cliente -> Servidor: POST /translate
+Servidor -> Servidor: translate_text(source_text, source_lang, target_lang)
+Servidor -> Cliente: Texto traducido
+
+
+
+
