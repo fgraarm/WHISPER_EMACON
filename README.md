@@ -4,7 +4,8 @@ Si no se tiene GPU es recomendable no utilizar más allá de medium para archivo
 
 INSTRUCCIONES INSTALACION:
 
-Ffmpeg debe estar instalado
+Ffmpeg debe estar instalado (VER INSTRUCCIONES ABAJO)
+
 Colocar la carpeta Whisper-dep (whisper depurado) donde se desee
 en un entorno virtualizado con anaconda por ejemplo instalar las siguientes librerias , todas con PIP
 El archivo requirements.txt está disponible dentro de /Backend para la instalacion rapida de las librerias necesarias
@@ -71,5 +72,26 @@ Procesamiento del Servidor: Las solicitudes son enviadas al servidor Flask, dond
 Respuesta al Cliente: Los resultados del procesamiento (transcripciones, diarizaciones, traducciones) son enviados de vuelta al cliente y mostrados en la interfaz.
 Este sistema integrado permite una interacción fluida entre el usuario y las capacid
 
-
+INSTRUCCIONES INSTALACION FFMPEG: 
+Paso 1: Descargar FFmpeg
+Ve al sitio web oficial de FFmpeg.
+Haz clic en el enlace de "Windows builds from gyan.dev" para ir a la página de descargas.
+Selecciona una versión para descargar. Por lo general, encontrarás una sección llamada "git" que contiene las últimas versiones. Haz clic en el enlace que dice "ffmpeg-git-full.7z" o "ffmpeg-git-essentials.7z". La versión "full" incluye todas las características, mientras que "essentials" tiene menos dependencias y podría ser suficiente para la mayoría de los usuarios.
+Guarda el archivo .7z en tu computadora.
+Paso 2: Extraer FFmpeg
+Necesitarás un extractor de archivos que pueda manejar archivos .7z. Si no tienes uno, puedes descargar 7-Zip de forma gratuita.
+Una vez que tengas un extractor de archivos, haz clic derecho en el archivo .7z que descargaste y selecciona "Extraer aquí" o "Extraer a ffmpeg-git-full/" (el nombre exacto puede variar dependiendo del archivo que hayas descargado).
+Se creará una nueva carpeta que contiene FFmpeg.
+Paso 3: Agregar FFmpeg al PATH
+Abre la carpeta extraída y encuentra la subcarpeta bin. Dentro de esta carpeta, verás los ejecutables de FFmpeg, incluyendo ffmpeg.exe.
+Haz clic en la barra de direcciones del Explorador de Windows y copia la ruta completa a la carpeta bin.
+Abre el menú de Inicio, escribe "variables de entorno" y selecciona la opción "Editar las variables de entorno del sistema" o "Editar las variables de entorno para tu cuenta".
+En la ventana del Sistema (o en la ventana de Propiedades del Sistema, dependiendo de tu versión de Windows), haz clic en "Variables de entorno...".
+Bajo "Variables del sistema" (para todos los usuarios) o "Variables de usuario" (solo para tu usuario), busca la variable Path y selecciónala.
+Haz clic en "Editar...".
+En la ventana de edición, haz clic en "Nuevo" y pega la ruta a la carpeta bin de FFmpeg que copiaste antes.
+Haz clic en "Aceptar" en todas las ventanas para cerrarlas y aplicar los cambios.
+Paso 4: Verificar la Instalación
+Abre una nueva ventana de la línea de comandos (CMD) o PowerShell.
+Escribe ffmpeg -version y presiona Enter. Si ves la versión de FFmpeg y la configuración de compilación, la instalación fue exitosa y FFmpeg está correctamente añadido al PATH
 
