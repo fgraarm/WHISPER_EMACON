@@ -36,24 +36,40 @@ El ejecutable se lleva whisper y todas las librerias necesarias, ya no hace falt
 
 EL SERVIDOR WEB SE LEVANTA AL POCO TIEMPO EN LOCALHOST:5000
 
-DIAGRAMA DE INTERCAMBIO DE INFORMACION 
-Cliente -> Servidor: POST /record
-Servidor -> audio_recording: start_recording(model, language)
-audio_recording -> whisper_integration: transcribe_audio(file_path, model_name, language)
-audio_recording -> Cliente: Transcripción en tiempo real
-Cliente -> Servidor: POST /stop_record
-Servidor -> audio_recording: stop_recording()
-Cliente -> Servidor: POST /transcribe (carga archivo)
-Servidor -> whisper_integration: transcribe_audio(file_path, model_name, language)
-Servidor -> Cliente: Transcripción del archivo
-Cliente -> Servidor: POST /diarize (carga archivo)
-Servidor -> diarization: diarize_and_transcribe(audio_input_path, audio_output_path, min_speakers, max_speakers, model_name, language)
-diarization -> whisper_integration: transcribe_audio(segment_path, model_name, language)
-Servidor -> Cliente: Resultados de la diarización
-Cliente -> Servidor: POST /translate
-Servidor -> Servidor: translate_text(source_text, source_lang, target_lang)
-Servidor -> Cliente: Texto traducido
+FUNCIONAMIENTO GENERAL
+1. Interfaz de Usuario (Frontend)
+La interfaz de usuario, definida en usoherramienta.html, proporciona controles para:
 
+Seleccionar un modelo de transcripción y especificar un idioma (opcional).
+Subir archivos de audio para la transcripción.
+Iniciar y detener la grabación de audio en tiempo real.
+Traducir el texto transcrito a otro idioma.
+2. Script de Cliente (JavaScript)
+El archivo script.js maneja la lógica del lado del cliente, incluyendo:
+
+Mostrar y ocultar elementos de la interfaz durante la carga, la grabación, y la traducción.
+Enviar solicitudes al servidor para transcribir audio, iniciar/detener grabaciones, y traducir texto.
+Actualizar la interfaz con los resultados de transcripciones, diarizaciones, y traducciones.
+3. Servidor Backend (Flask en Python)
+El archivo app.py define un servidor Flask que maneja las solicitudes del cliente, incluyendo:
+
+Transcripción y Diarización: Recibe archivos de audio, los procesa utilizando los módulos whisper_integration.py y diarization.py, y devuelve los resultados al cliente.
+Grabación en Tiempo Real: Inicia y detiene la grabación de audio mediante audio_recording.py, transcribe el audio grabado, y permite consultar las transcripciones acumuladas.
+Traducción: Utiliza una pipeline de Hugging Face Transformers para traducir texto entre idiomas soportados.
+4. Integración de Whisper para Transcripción (Python)
+El archivo whisper_integration.py utiliza el modelo Whisper de OpenAI para transcribir audio a texto. Puede configurarse con diferentes modelos (tiny, base, etc.) y admite la especificación de un idioma.
+
+5. Diarización de Hablantes (Python)
+diarization.py emplea la biblioteca pyannote.audio para la diarización, es decir, identificar cuándo y quién habla en un segmento de audio. Posteriormente, utiliza Whisper para transcribir los segmentos identificados por hablante.
+
+6. Grabación de Audio en Tiempo Real (Python)
+audio_recording.py maneja la grabación de audio desde el micrófono utilizando sounddevice, guarda los segmentos de audio temporalmente y los encola para su transcripción. También proporciona la funcionalidad para iniciar y detener la grabación, y para recuperar las transcripciones acumuladas.
+
+Flujo de Trabajo General
+Inicio de la Aplicación: El usuario interactúa con la interfaz web para subir archivos de audio, iniciar la grabación en tiempo real, o introducir texto para traducir.
+Procesamiento del Servidor: Las solicitudes son enviadas al servidor Flask, donde son procesadas según el tipo de solicitud (transcripción, diarización, grabación en tiempo real, traducción).
+Respuesta al Cliente: Los resultados del procesamiento (transcripciones, diarizaciones, traducciones) son enviados de vuelta al cliente y mostrados en la interfaz.
+Este sistema integrado permite una interacción fluida entre el usuario y las capacid
 
 
 
