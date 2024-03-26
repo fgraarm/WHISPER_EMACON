@@ -84,7 +84,9 @@ def diarize():
     file.save(file_path)
 
     # Definir valores para los argumentos faltantes
-    audio_output_path = "C:/Users/fgraa/Whisper_dep/backend/output"  # Cambia esto por tu directorio de salida real
+    # Cambia esto por tu directorio de salida real
+    audio_output_path = os.path.join(os.path.dirname(__file__), "../backend/output")
+  # Cambia esto por tu directorio de salida real
     os.makedirs(audio_output_path, exist_ok=True)
     min_diarization_speakers = int(request.form.get('min_diarization_speakers', '2'))  # Establece esto según tus necesidades
     max_diarization_speakers = int(request.form.get('max_diarization_speakers', '5'))  # Establece esto según tus necesidades
