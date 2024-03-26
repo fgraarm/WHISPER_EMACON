@@ -218,5 +218,6 @@ def static_proxy(path):
     return send_from_directory(frontend_dir, path)
 
 if __name__ == '__main__':
+    print("Bienvenido(a) a la aplicación. Abra su navegador y acceda a http://127.0.0.1:5000")
     app.run(debug=False, host='127.0.0.1' , port=5000)
 
