@@ -7,6 +7,7 @@ import os
 import logging
 import sys
 from diarization import diarize_and_transcribe  # Asegúrate de importar la función correctamente
+from whisper_translation import translate_to_english
 
 
 # Inicializa la pipeline de traducción
@@ -110,6 +111,25 @@ def diarize():
     # Por ejemplo, devolver los resultados de la diarización
     return jsonify({"diarization": formatted_results})
 
+@app.route('/translate_to_english', methods=['POST'])
+def translate_audio_to_english():
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+    
+    uploads_dir = os.path.join(os.getcwd(), 'uploads')
+    os.makedirs(uploads_dir, exist_ok=True)
+    filename = os.path.join(uploads_dir, secure_filename(file.filename))
+    file.save(filename)
+    
+    # Realizar la traducción
+    translation = translate_to_english(filename)
+    os.remove(filename)  # Asegúrate de eliminar el archivo después de procesarlo
+    
+    return jsonify({"translation": translation})
     
 @app.route('/translate', methods=['POST'])
 def translate_text():

@@ -14,11 +14,14 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
     formData.append('file', document.getElementById('audio-file').files[0]);
     formData.append('model', document.getElementById('model-select').value);
     formData.append('language', document.getElementById('language-input').value);
-    formData.append('outputOption', document.getElementById('output-option').value);
+    const outputOption = document.getElementById('output-option').value;
+    formData.append('outputOption', outputOption);
 
     let endpoint = '/transcribe';
-    if (document.getElementById('output-option').value === 'diarization') {
+    if (outputOption === 'diarization') {
         endpoint = '/diarize';
+    } else if (outputOption === 'translate_to_english') {
+        endpoint = '/translate_to_english'; // Nuevo endpoint para traducción directa al inglés
     }
 
     fetch(endpoint, {
@@ -28,7 +31,13 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
     .then(response => response.json())
     .then(data => {
         setLoading(false);
-        displayTranscriptionResult(data, endpoint);
+        if (outputOption === 'translate_to_english') {
+            // Mostrar el resultado de la traducción directa al inglés
+            document.getElementById('translation-result').textContent = data.translation || "No se encontró traducción.";
+        } else {
+            // Mostrar el resultado de la transcripción o diarización
+            displayTranscriptionResult(data, endpoint);
+        }
     })
     .catch(error => {
         setLoading(false);
