@@ -194,10 +194,16 @@
 
     <!-- Añade más opciones según los idiomas que desees soportar -->
 
-<div id="transcription-result" class="transcription-box"></div>
-<div id="translation-result" class="transcription-box2"></div>
-        
+    <div id="transcription-result" class="transcription-box"></div>
+    <div id="translation-result" class="transcription-box2"></div>
+    
+    <!-- Botón para exportar a CSV y checkbox para incluir traducción -->
+    <div class="export-options">
+        <button id="export-btn" class="btn">Exportar a CSV</button>
+        <label><input type="checkbox" id="include-translation"> Incluir traducción</label>
     </div>
+    
+    </div> <!-- Asumiendo que este es el cierre de tu contenedor principal, el cual no se muestra completamente en tu fragmento de código -->
     <nav>
       <ul>
        <li><a href="{{ url_for('index') }}">INICIO</a></li>
@@ -206,9 +212,8 @@
       </ul>
     </nav>
     <div class="emad-container">
-        <img id="EMAD-jpg" class= "EMAD" src="../static/images/EMAD.jpg" alt="EMAD" />
+        <img id="EMAD-jpg" class="EMAD" src="../static/images/EMAD.jpg" alt="EMAD" />
     </div>
-   <script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
-</body>
-</html>
-
+    <script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
+    </body>
+    </html>

@@ -130,3 +130,28 @@ function displayTranscriptionResult(data, endpoint) {
         document.getElementById('transcription-result').textContent = data.transcript || data.translation || "No se encontraron resultados.";
     }
 }
+document.getElementById('export-btn').addEventListener('click', function() {
+    const includeTranslation = document.getElementById('include-translation').checked;
+    const transcriptionText = document.getElementById('transcription-result').textContent;
+    const translationText = document.getElementById('translation-result').textContent;
+    
+    let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; // Incluye el BOM UTF-8
+    csvContent += "Transcripción,Traducción\n"; // Encabezados del CSV
+    
+    // Prepara la línea de datos para el CSV
+    let dataString = '"' + transcriptionText.replace(/"/g, '""') + '"'; // Escapa comillas dobles en la transcripción
+    if (includeTranslation) {
+        dataString += ',"' + translationText.replace(/"/g, '""') + '"'; // Escapa comillas dobles en la traducción
+    }
+    csvContent += dataString + "\n";
+    
+    // Crea un elemento de enlace para descargar el CSV
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "transcripcion_y_traduccion.csv");
+    document.body.appendChild(link); // Required for FF
+    
+    link.click(); // Inicia la descarga
+    document.body.removeChild(link); // Limpia añadiendo y quitando el enlace
+});
