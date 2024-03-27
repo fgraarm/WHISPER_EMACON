@@ -7,7 +7,7 @@
 <style>
   body {
     display: flex;
-    flex-direction: column; /* Orientación vertical */
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
@@ -16,38 +16,37 @@
 
   .background-flag {
     background-image: url('../static/images/bandera.jpg');
-    background-size: contain; /* La imagen se ajusta sin cortarse */
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    width: 50%; /* Tamaño de la imagen */
-    height: 300px; /* Altura del contenedor de la imagen */
+    width: 50%;
+    height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     border-radius: 8px;
-    margin-bottom: 20px; /* Espacio entre la imagen y los enlaces */
+    margin-bottom: 20px;
   }
 
-  .text {
-    background-color: rgba(255, 255, 255, 0.5);
+  .text, .languages {
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     padding: 20px;
+    margin: 10px 0;
+    width: 80%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   }
 
   nav ul {
     list-style-type: none;
     padding: 0;
-    margin: 0; /* Elimina el margen por defecto */
+    margin: 0;
     display: flex;
-    justify-content: center; /* Centra los enlaces horizontalmente */
+    justify-content: center;
     background-color: #333;
-    width: 100%; /* Opcional: Ajusta según el diseño deseado */
-    box-sizing: border-box; /* Asegura que padding y border estén incluidos en el ancho definido */
-  }
-
-  nav li {
-    display: block;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   nav li a {
@@ -61,24 +60,109 @@
   nav li a:hover {
     background-color: #111;
   }
+
+  .languages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px 0;
+    width: 80%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  .language-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .language-item {
+    width: calc(33.333% - 20px); /* Cada elemento ocupa un tercio del ancho del contenedor, con ajuste para el margen */
+    margin: 10px;
+    text-align: center; /* Centra el texto dentro del elemento */
+  }
 </style>
 </head>
 <body>
 
 <div class="background-flag">
   <div class="text">
-    Esta herramienta está en fase BETA, La intención es que sea capaz de transcribir una reunión o transcribir archivos importados de audio. Si no se dispone de GPU se recomienda usar solo los modelos Tiny y Base. Existe la posibilidad de traducir la transcripción a los idiomas disponibles.
+    Esta herramienta web ofrece una solución avanzada para la transcripción de audio, la traducción de texto, y la diarización, adaptándose perfectamente a diversas necesidades lingüísticas y de análisis. Los usuarios pueden cargar o grabar audio directamente en la plataforma, seleccionar entre varios modelos de transcripción y idiomas para traducción, y recibir transcripciones precisas instantáneamente. Además, incluye una funcionalidad de diarización para identificar distintos hablantes en el audio. Las transcripciones y traducciones generadas se pueden visualizar en la web y exportar fácilmente a un archivo CSV, ofreciendo una herramienta integral para la gestión y análisis de contenido auditivo.
   </div>
 </div>
 
 <nav>
   <ul>
-    <li><a href="{{ url_for('index') }}">INICIO</a></li>
-    <li><a href="{{ url_for('uso_herramienta') }}">USAR LA HERRAMIENTA</a></li>
-    <li><a href="{{ url_for('logs') }}">Ver Logs</a></li>
-    
+    <li><a href="#">INICIO</a></li>
+    <li><a href="#">USAR LA HERRAMIENTA</a></li>
+    <li><a href="#">Ver Logs</a></li>
+  </ul>
 </nav>
+
+<div class="languages">
+  <h2>Idiomas disponibles:</h2>
+  <div class="language-container">
+    <div class="language-item">Árabe: ar</div>
+    <div class="language-item">Armenio: hy</div>
+    <div class="language-item">Azerbaiyano: az</div>
+    <div class="language-item">Bielorruso: be</div>
+    <div class="language-item">Bosnio: bs</div>
+    <div class="language-item">Búlgaro: bg</div>
+    <div class="language-item">Catalán: ca</div>
+    <div class="language-item">Chino: zh</div>
+    <div class="language-item">Croata: hr</div>
+    <div class="language-item">Checo: cs</div>
+    <div class="language-item">Danés: da</div>
+    <div class="language-item">Neerlandés: nl</div>
+    <div class="language-item">Inglés: en</div>
+    <div class="language-item">Estonio: et</div>
+    <div class="language-item">Finés: fi</div>
+    <div class="language-item">Francés: fr</div>
+    <div class="language-item">Gallego: gl</div>
+    <div class="language-item">Alemán: de</div>
+    <div class="language-item">Griego: el</div>
+    <div class="language-item">Hebreo: he</div>
+    <div class="language-item">Hindi: hi</div>
+    <div class="language-item">Húngaro: hu</div>
+    <div class="language-item">Islandés: is</div>
+    <div class="language-item">Indonesio: id</div>
+    <div class="language-item">Italiano: it</div>
+    <div class="language-item">Japonés: ja</div>
+    <div class="language-item">Kannada: kn</div>
+    <div class="language-item">Kazajo: kk</div>
+    <div class="language-item">Coreano: ko</div>
+    <div class="language-item">Letón: lv</div>
+    <div class="language-item">Lituano: lt</div>
+    <div class="language-item">Macedonio: mk</div>
+    <div class="language-item">Malayo: ms</div>
+    <div class="language-item">Marathi: mr</div>
+    <div class="language-item">Maorí: mi</div>
+    <div class="language-item">Nepalí: ne</div>
+    <div class="language-item">Noruego: no</div>
+    <div class="language-item">Persa: fa</div>
+    <div class="language-item">Polaco: pl</div>
+    <div class="language-item">Portugués: pt</div>
+    <div class="language-item">Rumano: ro</div>
+    <div class="language-item">Ruso: ru</div>
+    <div class="language-item">Serbio: sr</div>
+    <div class="language-item">Eslovaco: sk</div>
+    <div class="language-item">Esloveno: sl</div>
+    <div class="language-item">Español: es</div>
+    <div class="language-item">Swahili: sw</div>
+    <div class="language-item">Sueco: sv</div>
+    <div class="language-item">Tagalo: tl</div>
+    <div class="language-item">Tamil: ta</div>
+    <div class="language-item">Tailandés: th</div>
+    <div class="language-item">Turco: tr</div>
+    <div class="language-item">Ucraniano: uk</div>
+    <div class="language-item">Urdu: ur</div>
+    <div class="language-item">Vietnamita: vi</div>
+    <div class="language-item">Galés: cy</div>
+  </div>
+</div>
 
 </body>
 </html>
-
