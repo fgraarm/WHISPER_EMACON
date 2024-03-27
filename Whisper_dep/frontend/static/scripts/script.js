@@ -2,7 +2,6 @@ function setLoading(isLoading) {
     document.getElementById('loading').style.display = isLoading ? 'block' : 'none';
 }
 
-// Función para actualizar el estado de los botones de grabación y detener
 function toggleRecordingButtons(isRecording) {
     document.getElementById('record-btn').style.display = isRecording ? 'none' : 'block';
     document.getElementById('stop-btn').style.display = isRecording ? 'block' : 'none';
@@ -10,7 +9,7 @@ function toggleRecordingButtons(isRecording) {
 
 document.getElementById('upload-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    setLoading(true); // Mostrar GIF de carga
+    setLoading(true);
     const formData = new FormData();
     formData.append('file', document.getElementById('audio-file').files[0]);
     formData.append('model', document.getElementById('model-select').value);
@@ -29,22 +28,7 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
     .then(response => response.json())
     .then(data => {
         setLoading(false);
-        if (endpoint === '/diarize') {
-    if (data.diarization && data.diarization.length > 0) {
-        let diarizationResult = '<ul>';
-        data.diarization.forEach(segment => {
-                    diarizationResult += `<li>${segment.start}-${segment.end} ${segment.speaker}: ${segment.transcript}</li>`;
-        });
-        diarizationResult += '</ul>';
-        document.getElementById('transcription-result').innerHTML = diarizationResult;
-    } else {
-        document.getElementById('transcription-result').textContent = "No se encontraron resultados de diarización.";
-    }
-} else {
-    document.getElementById('transcription-result').textContent = data.transcript || data.translation;
-}
-          
-        
+        displayTranscriptionResult(data, endpoint);
     })
     .catch(error => {
         setLoading(false);
@@ -53,85 +37,16 @@ document.getElementById('upload-form').addEventListener('submit', function(e) {
 });
 
 let recordingInterval;
-
-        document.getElementById('record-btn').addEventListener('click', function() {
-        document.getElementById('recording-gif').style.display = 'block'; // Mostrar el GIF de grabación
-
-   
-    toggleRecordingButtons(true); // Ocultar el botón de grabar y mostrar el de detener
-     // Capturar el modelo y el lenguaje seleccionados
-    const model = document.getElementById('model-select').value;
-    const language = document.getElementById('language-input').value; // Correcto según tu HTML
-
-
-    // Preparar el cuerpo de la solicitud
-    const requestBody = {
-        model: model,
-        language: language
-    };
-     fetch('/record', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json', // Asegurándose de que el servidor sabe que estás enviando JSON
-        },
-        body: JSON.stringify(requestBody) // Convertir los datos del formulario a JSON
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(() => {
-        setLoading(false); // Ocultar GIF de carga
-        recordingInterval = setInterval(fetchTranscription, 60000); // Cada 60 segundos
-    })
-    .catch(error => {
-       document.getElementById('recording-gif').style.display = 'none'; // Asegúrate de ocultar el GIF si hay un error
-        toggleRecordingButtons(false);
-        console.error('Error:', error);
-    });
+document.getElementById('record-btn').addEventListener('click', function() {
+    startRecording();
 });
 
 document.getElementById('stop-btn').addEventListener('click', function() {
-        document.getElementById('recording-gif').style.display = 'none'; // Ocultar el GIF de grabación
-    toggleRecordingButtons(false); // Mostrar el botón de grabar y ocultar el de detener
-    clearInterval(recordingInterval); // Detener el intervalo de solicitud de transcripciones
-    fetch('/stop_record', { method: 'POST' })  // Asegúrate de que este es el endpoint correcto
-    .then(response => {
-        console.log('Recording stopped successfully');
-    })
-    .catch(error => console.error('Error al detener la grabación:', error));
+    stopRecording();
 });
-document.getElementById('translate-btn').addEventListener('click', function() {
-    const transcription = document.getElementById('transcription-result').textContent;
-    const sourceLang = document.getElementById('source-lang-select').value; // Asumiendo que tienes este selector
-    const targetLang = document.getElementById('target-lang-select').value;
-    document.getElementById('translating-gif').style.display = 'block';
 
-    fetch('/translate', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            text: transcription,
-            source_lang: sourceLang, // Envía el idioma de origen
-            target_lang: targetLang,
-        }),
-    })
-    .then(response => response.json())
-    .then(data => {
-    // Ocultar el GIF de traducción
-        document.getElementById('translating-gif').style.display = 'none';
-        // Asegúrate de acceder a la propiedad correcta de la respuesta JSON para obtener el texto traducido
-        document.getElementById('translation-result').textContent = data.translation; // Ajustado para usar data.translation
-    })
-  .catch(error => {
-        // Ocultar el GIF de traducción en caso de error
-        document.getElementById('translating-gif').style.display = 'none';
-        console.error('Error:', error);
-});
+document.getElementById('translate-btn').addEventListener('click', function() {
+    translateTranscription();
 });
 
 function fetchTranscription() {
@@ -140,9 +55,78 @@ function fetchTranscription() {
     .then(data => {
         if (data.transcript) {
             let currentText = document.getElementById('transcription-result').textContent;
-            document.getElementById('transcription-result').textContent = currentText + data.transcript;
+            document.getElementById('transcription-result').textContent = `${currentText}\n${data.transcript}`;
         }
     })
     .catch(error => console.error('Error:', error));
 }
 
+function startRecording() {
+    document.getElementById('recording-gif').style.display = 'block';
+    toggleRecordingButtons(true);
+    const model = document.getElementById('model-select').value;
+    const language = document.getElementById('language-input').value;
+
+    const requestBody = { model, language };
+    fetch('/record', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestBody)
+    })
+    .then(handleResponse)
+    .then(() => {
+        recordingInterval = setInterval(fetchTranscription, 5000); // Cada 5 segundos
+    })
+    .catch(handleError);
+}
+
+function stopRecording() {
+    document.getElementById('recording-gif').style.display = 'none';
+    toggleRecordingButtons(false);
+    clearInterval(recordingInterval);
+    fetch('/stop_record', { method: 'POST' })
+    .then(handleResponse)
+    .catch(handleError);
+}
+
+function translateTranscription() {
+    document.getElementById('translating-gif').style.display = 'block';
+    const transcription = document.getElementById('transcription-result').textContent;
+    const sourceLang = document.getElementById('source-lang-select').value;
+    const targetLang = document.getElementById('target-lang-select').value;
+
+    fetch('/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: transcription, source_lang: sourceLang, target_lang: targetLang }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('translating-gif').style.display = 'none';
+        document.getElementById('translation-result').textContent = data.translation;
+    })
+    .catch(error => {
+        document.getElementById('translating-gif').style.display = 'none';
+        console.error('Error:', error);
+    });
+}
+
+function handleResponse(response) {
+    if (!response.ok) throw new Error('Network response was not ok');
+    return response.json();
+}
+
+function handleError(error) {
+    document.getElementById('recording-gif').style.display = 'none';
+    toggleRecordingButtons(false);
+    console.error('Error:', error);
+}
+
+function displayTranscriptionResult(data, endpoint) {
+    if (endpoint === '/diarize' && data.diarization && data.diarization.length > 0) {
+        let diarizationResult = data.diarization.map(segment => `<li>${segment.start}-${segment.end} ${segment.speaker}: ${segment.transcript}</li>`).join('');
+        document.getElementById('transcription-result').innerHTML = `<ul>${diarizationResult}</ul>`;
+    } else {
+        document.getElementById('transcription-result').textContent = data.transcript || data.translation || "No se encontraron resultados.";
+    }
+}
