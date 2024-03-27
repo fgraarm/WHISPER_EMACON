@@ -25,6 +25,10 @@ translators = {
     'it-en': pipeline("translation", model="Helsinki-NLP/opus-mt-it-en"),
     'ja-en': pipeline("translation", model="Helsinki-NLP/opus-mt-ja-en"),
     'pl-en': pipeline("translation", model="Helsinki-NLP/opus-mt-pl-en"),
+    'ar-en': pipeline("translation", model="Helsinki-NLP/opus-mt-ar-en"),
+    'ar-es': pipeline("translation", model="Helsinki-NLP/opus-mt-ar-es"),
+
+
 }
 
 # Definir la ruta al directorio frontend
