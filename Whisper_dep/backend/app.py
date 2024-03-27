@@ -11,16 +11,20 @@ from diarization import diarize_and_transcribe  # Asegúrate de importar la func
 
 # Inicializa la pipeline de traducción
 translators = {
-    'en-es': pipeline("translation", model="Helsinki-NLP/opus-mt-en-es"),
     'ru-es': pipeline("translation", model="Helsinki-NLP/opus-mt-ru-es"),
     'fr-es': pipeline("translation", model="Helsinki-NLP/opus-mt-fr-es"),
-    'es-en': pipeline("translation", model="Helsinki-NLP/opus-mt-es-en"),
-    'es-ru': pipeline("translation", model="Helsinki-NLP/opus-mt-es-ru"),
-    'es-fr': pipeline("translation", model="Helsinki-NLP/opus-mt-es-fr"),
-    'fr-en': pipeline("translation", model="Helsinki-NLP/opus-mt-fr-en"),
-    'en-ru': pipeline("translation", model="Helsinki-NLP/opus-mt-en-ru"),
+    'en-es': pipeline("translation", model="Helsinki-NLP/opus-mt-en-es"),
+    'de-es': pipeline("translation", model="Helsinki-NLP/opus-mt-de-es"),
+    'it-es': pipeline("translation", model="Helsinki-NLP/opus-mt-it-es"),
+    'ja-es': pipeline("translation", model="Helsinki-NLP/opus-mt-ja-es"),
+    'pl-es': pipeline("translation", model="Helsinki-NLP/opus-mt-pl-es"),
     'ru-en': pipeline("translation", model="Helsinki-NLP/opus-mt-ru-en"),
-    'fr-ru': pipeline("translation", model="Helsinki-NLP/opus-mt-fr-ru")
+    'zh-en': pipeline("translation", model="Helsinki-NLP/opus-mt-zh-en"),
+    'fr-en': pipeline("translation", model="Helsinki-NLP/opus-mt-fr-en"),
+    'de-en': pipeline("translation", model="Helsinki-NLP/opus-mt-de-en"),
+    'it-en': pipeline("translation", model="Helsinki-NLP/opus-mt-it-en"),
+    'ja-en': pipeline("translation", model="Helsinki-NLP/opus-mt-ja-en"),
+    'pl-en': pipeline("translation", model="Helsinki-NLP/opus-mt-pl-en"),
 }
 
 # Definir la ruta al directorio frontend

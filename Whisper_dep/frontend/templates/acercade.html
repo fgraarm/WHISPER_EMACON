@@ -39,36 +39,40 @@
   }
 
   nav ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    background-color: #333;
-    width: 100%;
-    box-sizing: border-box;
-  }
+      list-style-type: none;
+      padding: 0;
+      margin: 0; /* Elimina el margen por defecto */
+      display: flex;
+      justify-content: center; /* Centra los enlaces horizontalmente */
+      background-color: #333;
+      width: 100%; /* Opcional: Ajusta según el diseño deseado */
+      box-sizing: border-box; /* Asegura que padding y border estén incluidos en el ancho definido */
+    }
 
-  nav li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
+    nav li {
+      display: block;
+    }
 
-  nav li a:hover {
-    background-color: #111;
-  }
+    nav li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
 
+    nav li a:hover {
+      background-color: #111;
+    }
   .languages {
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
-    padding: 20px;
-    margin: 10px 0;
+    padding: 10px;
+    margin-top: 5px; /* Reducido de 10px a 5px para disminuir la distancia */
+    margin-bottom: 10px; /* Mantener el margen inferior como estaba */
     width: 80%;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   }
@@ -80,7 +84,7 @@
   }
 
   .language-item {
-    width: calc(33.333% - 20px); /* Cada elemento ocupa un tercio del ancho del contenedor, con ajuste para el margen */
+    width: calc(20% - 20px); /* Cada elemento ocupa un tercio del ancho del contenedor, con ajuste para el margen */
     margin: 10px;
     text-align: center; /* Centra el texto dentro del elemento */
   }
@@ -94,13 +98,6 @@
   </div>
 </div>
 
-<nav>
-  <ul>
-    <li><a href="#">INICIO</a></li>
-    <li><a href="#">USAR LA HERRAMIENTA</a></li>
-    <li><a href="#">Ver Logs</a></li>
-  </ul>
-</nav>
 
 <div class="languages">
   <h2>Idiomas disponibles:</h2>
@@ -163,6 +160,13 @@
     <div class="language-item">Galés: cy</div>
   </div>
 </div>
+<nav>
+  <ul>
+    <li><a href="{{ url_for('index') }}">INICIO</a></li>
+    <li><a href="{{ url_for('uso_herramienta') }}">USAR LA HERRAMIENTA</a></li>
+    <li><a href="{{ url_for('logs') }}">Ver Logs</a></li>
 
+  </ul>
+</nav>
 </body>
 </html>
