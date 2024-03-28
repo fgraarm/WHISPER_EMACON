@@ -37,6 +37,10 @@ def process_audio_files_thread(model, language):
 
 def start_recording(model, language=None):
     global is_recording
+    # Verifica y crea la carpeta uploads si no existe
+    uploads_dir = 'uploads'  # Puedes ajustar la ruta según sea necesario
+    if not os.path.exists(uploads_dir):
+        os.makedirs(uploads_dir)
     is_recording = True
     threading.Thread(target=recording_thread, args=(model, language), daemon=True).start()
     threading.Thread(target=process_audio_files_thread, args=(model, language), daemon=True).start()
