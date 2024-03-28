@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory, render_template
+from flask import Flask, request, jsonify, send_from_directory, render_template, url_for
 from werkzeug.utils import secure_filename
 from whisper_integration import transcribe_audio
 from audio_recording import start_recording, get_next_transcription, stop_recording  # Asegúrate de importar stop_recording
@@ -8,6 +8,8 @@ import logging
 import sys
 from diarization import diarize_and_transcribe  # Asegúrate de importar la función correctamente
 from whisper_translation import translate_to_english
+import signal
+
 
 
 # Inicializa la pipeline de traducción
@@ -244,6 +246,13 @@ def stop_record():
 def static_proxy(path):
     """Servir archivos estáticos."""
     return send_from_directory(frontend_dir, path)
+
+@app.route('/shutdown', methods=['GET'])
+def shutdown():
+    """Función para detener el servidor Flask forzosamente."""
+    os.kill(os.getpid(), signal.SIGINT)  # SIGINT para simular la interrupción del teclado
+    return 'Cerrando aplicación...'
+
 
 if __name__ == '__main__':
     print("Bienvenido(a) a la aplicación. Abra su navegador y acceda a http://127.0.0.1:5000")
