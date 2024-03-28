@@ -41,12 +41,12 @@
   nav ul {
       list-style-type: none;
       padding: 0;
-      margin: 0; /* Elimina el margen por defecto */
+      margin: 0;
       display: flex;
-      justify-content: center; /* Centra los enlaces horizontalmente */
+      justify-content: center;
       background-color: #333;
-      width: 100%; /* Opcional: Ajusta según el diseño deseado */
-      box-sizing: border-box; /* Asegura que padding y border estén incluidos en el ancho definido */
+      width: 100%;
+      box-sizing: border-box;
     }
 
     nav li {
@@ -71,8 +71,8 @@
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     padding: 10px;
-    margin-top: 5px; /* Reducido de 10px a 5px para disminuir la distancia */
-    margin-bottom: 10px; /* Mantener el margen inferior como estaba */
+    margin-top: 5px;
+    margin-bottom: 10px;
     width: 80%;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   }
@@ -84,9 +84,27 @@
   }
 
   .language-item {
-    width: calc(20% - 20px); /* Cada elemento ocupa un tercio del ancho del contenedor, con ajuste para el margen */
+    width: calc(20% - 20px);
     margin: 10px;
-    text-align: center; /* Centra el texto dentro del elemento */
+    text-align: center;
+  }
+
+  /* Estilo agregado para la imagen ampliable */
+  .img-container {
+    width: 100px; /* Tamaño inicial de la imagen */
+    transition: transform 0.2s; /* Efecto de transición suave */
+    margin-top: 20px; /* Espacio por encima de la imagen */
+  }
+
+  .img-container img {
+    width: 100%;
+    height: auto;
+    cursor: pointer; /* Cambia el cursor para indicar que es clickeable */
+  }
+
+  /* Estilo para cuando se hace clic y se agranda la imagen */
+  .img-container.clicked {
+    width: 1000px; /* Nuevo tamaño de la imagen */
   }
 </style>
 </head>
@@ -97,7 +115,10 @@
     Esta herramienta web ofrece una solución avanzada para la transcripción de audio, la traducción de texto, y la diarización, adaptándose perfectamente a diversas necesidades lingüísticas y de análisis. Los usuarios pueden cargar o grabar audio directamente en la plataforma, seleccionar entre varios modelos de transcripción y idiomas para traducción, y recibir transcripciones precisas instantáneamente. Además, incluye una funcionalidad de diarización para identificar distintos hablantes en el audio. Las transcripciones y traducciones generadas se pueden visualizar en la web y exportar fácilmente a un archivo CSV, ofreciendo una herramienta integral para la gestión y análisis de contenido auditivo.
   </div>
 </div>
-
+<!-- Contenedor de la imagen que se puede clickear para agrandar -->
+<div class="img-container" id="expandableImageContainer">
+  <img src="../static/images/HERRAMIENTA.jpg" alt="Herramienta" onclick="toggleImageSize()">
+</div>
 
 <div class="languages">
   <h2>Idiomas disponibles:</h2>
@@ -168,5 +189,12 @@
 
   </ul>
 </nav>
+<script>
+  // Función para alternar el tamaño de la imagen
+  function toggleImageSize() {
+    var imgContainer = document.getElementById('expandableImageContainer');
+    imgContainer.classList.toggle('clicked');
+  }
+  </script>
 </body>
 </html>
