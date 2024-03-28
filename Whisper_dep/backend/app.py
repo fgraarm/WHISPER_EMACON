@@ -122,13 +122,16 @@ def translate_audio_to_english():
     if file.filename == '':
         return jsonify({"error": "No selected file"}), 400
     
+    # Recoger el idioma de origen si se proporciona en el formulario
+    source_language = request.form.get('language', None)
+
     uploads_dir = os.path.join(os.getcwd(), 'uploads')
     os.makedirs(uploads_dir, exist_ok=True)
     filename = os.path.join(uploads_dir, secure_filename(file.filename))
     file.save(filename)
     
     # Realizar la traducción
-    translation = translate_to_english(filename)
+    translation = translate_to_english(filename, model_name='base', source_language=source_language)
     os.remove(filename)  # Asegúrate de eliminar el archivo después de procesarlo
     
     return jsonify({"translation": translation})
