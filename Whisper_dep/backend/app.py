@@ -106,7 +106,6 @@ def diarize():
 
     # Llamar a la función diarization con todos los argumentos necesarios
    
-
     formatted_results = diarize_and_transcribe(file_path, audio_output_path, min_diarization_speakers, max_diarization_speakers, model, language)
 
     # Haz lo que necesites con los resultados
@@ -202,16 +201,9 @@ def transcribe():
     filename = os.path.join(uploads_dir, secure_filename(file.filename))
     file.save(filename)
 
-    # Si la opción es diarización, llama a diarize_audio
-    if output_option == 'diarization':
-        speakers = diarize_and_transcribe(filename)
-        os.remove(filename)  # Asegúrate de eliminar el archivo después de procesarlo
-        return jsonify({"diarization": speakers})
-    else:
-        # Para otras opciones, incluyendo timestamps o ninguna, llama a transcribe_audio
-        transcript = transcribe_audio(filename, model, language, includeTimestamps)
-        os.remove(filename)  # Asegúrate de eliminar el archivo después de procesarlo
-        return jsonify({"transcript": transcript})
+    transcript = transcribe_audio(filename, model, language, includeTimestamps)
+    os.remove(filename)  # Asegúrate de eliminar el archivo después de procesarlo
+    return jsonify({"transcript": transcript})
  
 
 @app.route('/record', methods=['POST'])
