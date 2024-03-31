@@ -1,3 +1,5 @@
+import warnings
+warnings.filterwarnings("ignore", message="torchaudio._backend.set_audio_backend has been deprecated")
 from flask import Flask, request, jsonify, send_from_directory, render_template, url_for
 from werkzeug.utils import secure_filename
 from whisper_integration import transcribe_audio
@@ -9,7 +11,7 @@ import sys
 from diarization import diarize_and_transcribe  # Asegúrate de importar la función correctamente
 from whisper_translation import translate_to_english
 import signal
-
+import warnings
 
 
 # Inicializa la pipeline de traducción
