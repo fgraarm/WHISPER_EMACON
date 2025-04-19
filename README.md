@@ -33,29 +33,7 @@ Para forzar la reinstalación sin dependencias: pip install --upgrade --no-deps 
 Compilación de la Aplicación (.exe):
 
 Ajusta los caminos según tu usuario y dominio virtual. 
-Utiliza PyInstaller para compilar: pyinstaller -F --icon "C:\Users\fgraa\Desktop\EMAD-WHISPER.ico" ^
-    --add-data "C:\Users\fgraa\.conda\envs\Whisper_DIVESTRA17JUL_BETA\Lib\site-packages\whisper;whisper" ^
-    --add-data "C:\Users\fgraa\.conda\envs\Whisper_DIVESTRA17JUL_BETA\Lib\site-packages\lightning_fabric\version.info;lightning_fabric" ^
-    --add-data "frontend/templates;frontend/templates" ^
-    --add-data "frontend/static;frontend/static" ^
-    --add-data "C:\Users\fgraa\.conda\envs\Whisper_DIVESTRA17JUL_BETA\Lib\site-packages\pyannote;pyannote" ^
-    --add-data "C:\Users\fgraa\.conda\envs\Whisper_DIVESTRA17JUL_BETA\Lib\site-packages\pytorch_metric_learning;pytorch_metric_learning" ^
-    --add-data "C:\Users\fgraa\.conda\envs\Whisper_DIVESTRA17JUL_BETA\Lib\site-packages\sklearn;sklearn" ^
-    --add-data "C:\Users\fgraa\.conda\envs\Whisper_DIVESTRA17JUL_BETA\Lib\site-packages\asteroid_filterbanks;asteroid_filterbanks" ^
-    --hidden-import=pytorch_metric_learning.losses ^
-    --hidden-import=pytorch_metric_learning.miners ^
-    --hidden-import=pytorch_metric_learning.distances ^
-    --hidden-import=pytorch_metric_learning.reducers ^
-    --hidden-import=pytorch_metric_learning.utils.common_functions ^
-    --hidden-import=sklearn.utils._typedefs ^
-    --hidden-import=sklearn.utils._heap ^
-    --hidden-import=sklearn.utils._random ^
-    --hidden-import=sklearn.utils._param_validation ^
-    --hidden-import=whisper ^
-    --hidden-import=pyannote ^
-    --hidden-import=torchvision ^
-    --hidden-import=torchaudio ^
-    backend/app.py
+Utiliza PyInstaller para compilar: pyinstaller -F --icon "C:\Users\fgraa\Desktop\EMAD-WHISPER.ico" ^ --add-data "C:\Users\fgraa.conda\envs\Whisper_DIVESTRA17JUL_BETA\Lib\site-packages\whisper;whisper" ^ --add-data "C:\Users\fgraa.conda\envs\Whisper_DIVESTRA17JUL_BETA\Lib\site-packages\lightning_fabric\version.info;lightning_fabric" ^ --add-data "frontend/templates;frontend/templates" ^ --add-data "frontend/static;frontend/static" ^ --add-data "C:\Users\fgraa.conda\envs\Whisper_DIVESTRA17JUL_BETA\Lib\site-packages\pyannote;pyannote" ^ --add-data "C:\Users\fgraa.conda\envs\Whisper_DIVESTRA17JUL_BETA\Lib\site-packages\pytorch_metric_learning;pytorch_metric_learning" ^ --add-data "C:\Users\fgraa.conda\envs\Whisper_DIVESTRA17JUL_BETA\Lib\site-packages\sklearn;sklearn" ^ --add-data "C:\Users\fgraa.conda\envs\Whisper_DIVESTRA17JUL_BETA\Lib\site-packages\asteroid_filterbanks;asteroid_filterbanks" ^ --hidden-import=pytorch_metric_learning.losses ^ --hidden-import=pytorch_metric_learning.miners ^ --hidden-import=pytorch_metric_learning.distances ^ --hidden-import=pytorch_metric_learning.reducers ^ --hidden-import=pytorch_metric_learning.utils.common_functions ^ --hidden-import=sklearn.utils._typedefs ^ --hidden-import=sklearn.utils._heap ^ --hidden-import=sklearn.utils._random ^ --hidden-import=sklearn.utils._param_validation ^ --hidden-import=whisper ^ --hidden-import=pyannote ^ --hidden-import=torchvision ^ --hidden-import=torchaudio ^ backend/app.py
 
 
 
